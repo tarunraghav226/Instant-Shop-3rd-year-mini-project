@@ -23,33 +23,43 @@ nav ul{
     margin-left: 30px;
 }
 
+nav ul li a{color: black;}
+nav ul li a:link, a:visited{
+    text-decoration: none;
+    color:black
+}
+
+nava ul li a:hover{color:rebeccapurple}
+
 nav ul li{
     float: left;
     padding: 10px;
 }
 
-main{
-    background-color: rgb(43, 22, 22);
-    clear: both;
-    height: 87.8vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
+.hamburger{display: none;}
+.cross{display: none;}
+#chk{display: none;}
 
-main .desc, .image{display: inline-block;margin: 20px;}
 
-main .desc h1, span{color: white;}
+@media only screen and (max-width:370px){
+    nav ul li{
+        clear: both;
+        text-align: center;
+        width: 100%;
+    }
 
-main .desc a{
-    text-decoration:none;
-    color: white;
-    border: 1px solid white;
-    padding: 10px;
-    width: fit-content;
-}
+    nav{display: none;}
 
-main .image{
-    width: 40vw;
+    .hamburger, .cross{
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        color: white;
+    }
+    .hamburger{display: inline;}
+
+    #chk:checked ~ .hamburger{display: none;}
+    #chk:checked ~ .cross{display: inline;}
+
+    #chk:checked ~ nav{display: contents;}
 }

@@ -29,4 +29,16 @@ main .desc a{
 
 main .image{
     width: 40vw;
+    min-width: 222px;
+    max-width: 500px;
+}
+
+.image img{width:100%;min-width: 222px;max-width: 500px;}
+
+@media only screen and (max-width:720px){
+    
+    main{flex-direction: column;}
+
+    .image{order: 1;}
+    .desc{order: 2;}
 }
