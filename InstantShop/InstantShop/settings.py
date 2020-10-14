@@ -26,7 +26,7 @@ SECRET_KEY = '7&!@wovf4jqqez^g5*yno=^3^8_tq96wzkg89g$wffhmiwokpt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['instantshop.pythonanywhere.com','127.0.0.1']
 
 
 # Application definition
