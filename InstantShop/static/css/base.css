@@ -43,7 +43,7 @@ nav ul li{
 #chk{display: none;}
 
 
-@media only screen and (max-width:370px){
+@media only screen and (max-width:466px){
     nav ul li{
         clear: both;
         text-align: center;
