@@ -42,6 +42,38 @@ nav ul li{
 .cross{display: none;}
 #chk{display: none;}
 
+input{
+    background-color: transparent;
+    outline: none;
+    border:none;
+    border-bottom:1px solid rgb(43, 22, 22);
+}
+
+input:focus{border-bottom: 1px solid lightblue;}
+
+span{    
+    line-height: 30px;
+    letter-spacing: 2px;
+}
+
+#exampleModalLongTitle{
+    z-index: 1;
+    display: block;
+    width:100%;
+    text-align: center;
+    color: white;
+    font-weight: 900;
+}
+.layer {
+    z-index: 0;
+    background-color: rgba(167, 166, 164, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 
 @media only screen and (max-width:466px){
     nav ul li{
