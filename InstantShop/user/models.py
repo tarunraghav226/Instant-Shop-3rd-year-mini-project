@@ -12,6 +12,7 @@ class CustomerUser(models.Model):
     dob = models.DateField()
     phone_number = models.TextField(max_length=13)
     photo = models.FileField(upload_to = user_directory)
+    is_email_verified = models.BooleanField(default=False) 
 
     def __str__(self):
         return str(self.user.username)
