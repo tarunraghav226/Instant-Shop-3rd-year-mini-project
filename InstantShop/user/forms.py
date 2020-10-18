@@ -115,7 +115,7 @@ class SignUpForm(forms.Form):
         mail(user.email,user.first_name,token)
 
     def generate_token(self):
-        symbols_used = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$&*'
+        symbols_used = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@$&*'
 
         token = ''
 
