@@ -13,6 +13,7 @@ class CustomerUser(models.Model):
     phone_number = models.TextField(max_length=13)
     photo = models.FileField(upload_to = user_directory)
     is_email_verified = models.BooleanField(default=False) 
+    token = models.CharField(max_length = 30, primary_key = True)
 
     def __str__(self):
         return str(self.user.username)
