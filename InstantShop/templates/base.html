@@ -31,96 +31,95 @@
     </label>
     <nav>
         <ul>
-            <li><i class="fa fa-home" aria-hidden="true"></i><a href="#"> Home</a></li>
+            <li><i class="fa fa-home" aria-hidden="true"></i><a href="{% url 'index' %}"> Home</a></li>
             <li><i class="fa fa-shopping-cart" aria-hidden="true"></i><a href="#"> Shop</a></li>
             <li><i class="fa fa-users" aria-hidden="true"></i><a href="#"> About Us</a></li>
-            <li><i class="fa fa-user" aria-hidden="true"></i><a href="#" data-toggle="modal" data-target="#loginModalCenter"> Login</a></li>
-            <li><i class="fa fa-sign-in" aria-hidden="true"></i><a href="#" data-toggle="modal" data-target="#signUpModalCenter"> Sign Up</a></li>
-        </ul>
+            {% if user.is_authenticated %}
+              <li><i class="fa fa-dashboard" aria-hidden="true"></i><a href="#" > Profile</a></li>
+              <li><i class="fa fa-sign-out" aria-hidden="true"></i><a href="{% url 'logout' %}" > Logout</a></li>
+            {% else %}
+              <li><i class="fa fa-user" aria-hidden="true"></i><a href="#" data-toggle="modal" data-target="#loginModalCenter"> Login</a></li>
+              <li><i class="fa fa-sign-in" aria-hidden="true"></i><a href="#" data-toggle="modal" data-target="#signUpModalCenter"> Sign Up</a></li>
+            {% endif %}
+          </ul>
     </nav>
 
-    <!--Login Modal Starts-->
-    <div class="modal fade" id="loginModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content" style='background-image: url("{%static "images/home-page/login-modal-image.jpg"%}"); background-position:center;background-repeat:no-repeat;background-size:cover;'>
-            <div class="layer">
+    {% if not user.is_authenticated %}
+      <!--Login Modal Starts-->
+      <div class="modal fade" id="loginModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style='background-image: url("{%static "images/home-page/login-modal-image.jpg"%}"); background-position:center;background-repeat:no-repeat;background-size:cover;'>
+              <div class="layer">
+              </div>
+              <div class="modal-header" style="border: none;">
+                <h5 class="modal-title" id="exampleModalLongTitle">Login Here</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true" style="z-index: 1;">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form action="{% url 'index' %}" method="POST">
+                      {% csrf_token %}
+                      {{ login_form.as_p}}
+                      <br><br>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-primary">Login</button>
+                      </div>
+                  </form>
+              </div>
             </div>
-            <div class="modal-header" style="border: none;">
-              <h5 class="modal-title" id="exampleModalLongTitle">Login Here</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true" style="z-index: 1;">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-                <form action="#" method="POST">
-                    <label for="username">Username:</label>
-                    <input type="text" name="username" id="username">
-                    <br><br>
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" id="password">
-                    <br><br>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+      </div>
+      <!--Login Modal Ends-->
+
+      <!--SignUp Modal Starts-->
+      <div class="modal fade" id="signUpModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style='background-image: url("{%static "images/home-page/signup-modal-image.jpg"%}"); background-position:center;background-repeat:no-repeat;background-size:cover;'>
+              <div class="layer"></div>
+              <div class="modal-header" style="border: none;">
+                <h5 class="modal-title" id="exampleModalLongTitle">SignUp Here</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="{% url 'register' %}" method="POST">
+                  {% csrf_token %}
+                  {% for field in signup_form %}
+                      <span>
+                          {{ field.errors }}
+                          {{field.label}} {{field}}
+                          <br>
+                      </span>
+                  {% endfor %}
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">SignUp</button>
                     </div>
                 </form>
+              </div>
+              
             </div>
           </div>
-        </div>
-    </div>
-    <!--Login Modal Ends-->
-
-    <!--SignUp Modal Starts-->
-    <div class="modal fade" id="signUpModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content" style='background-image: url("{%static "images/home-page/signup-modal-image.jpg"%}"); background-position:center;background-repeat:no-repeat;background-size:cover;'>
-            <div class="layer"></div>
-            <div class="modal-header" style="border: none;">
-              <h5 class="modal-title" id="exampleModalLongTitle">SignUp Here</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="#" method="POST">
-                <span>
-                    <label for="firstname">FirstName: </label><input type="text" name="firstname" id="firstname">
-                </span><br>
-                <span>
-                    <label for="lastname">LastName: </label><input type="text" name="lastname" id="lastname">
-                </span><br>
-                <span>
-                    <label for="username">Username: </label><input type="text" name="username" id="username">
-                </span><br>
-                <span>
-                    <label for="address">Address: </label><input type="text" name="address" id="address">
-                </span><br>
-                <span>
-                    <label for="email">Email: </label><input type="email" name="email" id="email">
-                </span><br>
-                <span>
-                    <label for="telephone">Mobile Number: </label><input type="tel" name="telephone" id="telephone">
-                </span><br>
-                <span>
-                    <label for="dob">Date Of Birth: </label><input type="date" name="dob" id="dob">
-                </span><br>
-                <span>
-                    <label for="password1">Password: </label><input type="password" name="password1" id="password1">
-                </span><br>
-                <span>
-                    <label for="password2">Confirm Password: </label><input type="password" name="password2" id="password2">
-                </span>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">SignUp</button>
-                  </div>
-              </form>
-            </div>
-            
+      </div>
+      <!--SignUp Modal Ends-->
+    {% endif %}
+    <div class="messages">
+      {% if messages %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>
+              {% for message in messages%}
+                  {{ message }}
+              {% endfor %}
+            </strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true" style="color: brown;">&times;</span>
+            </button>
           </div>
-        </div>
+      {% endif %}
     </div>
-    <!--SignUp Modal Ends-->
     <main>
         {% block main %}
         {% endblock %}
