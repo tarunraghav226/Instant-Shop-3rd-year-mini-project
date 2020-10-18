@@ -16,8 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from user import views as view
+from django.conf.urls.static import static
+from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', view.home)
-]
+    path('index/', view.LoginView.as_view(), name='index'),
+    path('register/', view.RegisterView.as_view(), name='register'),
+    path('logout/', view.LogoutView.as_view(), name='logout'),
+    path('verify-email/<str:token>', view.EmailVerificationView.as_view(), name='verify_email')
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
