@@ -94,7 +94,9 @@
                           <br>
                       </span>
                   {% endfor %}
+
                   <div id="error" style="color: red; font-weight: bolder;"></div>
+
                   <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                       <button type="submit" class="btn btn-primary">SignUp</button>
@@ -102,14 +104,13 @@
                 </form>
                 <script>
                   function validate(){
-                    var pass = document.getElementById("id_password1");
-                    var cpass = document.getElementById("id_password2");
-
+                    var pass = document.getElementById('id_password1').value;
+                    var cpass = document.getElementById('id_password2').value;
                     if(pass != cpass){
-                      document.getElementById("error").innerHTML = "Password and Confirm Password must be same."
+                      document.getElementById('error').innerHTML = "Password and Confirm Password must be same";
                       return false;
                     }
-                  } 
+                  }
                 </script>
               </div>
               
