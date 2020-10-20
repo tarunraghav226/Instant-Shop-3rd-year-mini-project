@@ -94,11 +94,22 @@
                           <br>
                       </span>
                   {% endfor %}
+                  <div id="error"></div>
                   <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                       <button type="submit" class="btn btn-primary">SignUp</button>
                     </div>
                 </form>
+                <script>
+                    var pass = document.getElementById("id_password1");
+                    var cpass = document.getElementById("id_password2");
+
+                    if(pass != cpass){
+                      document.getElementById("error").innerHTML = "Password and Confirm Password must be same."
+                      return false;
+                    }
+
+                </script>
               </div>
               
             </div>

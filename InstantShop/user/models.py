@@ -11,7 +11,7 @@ class CustomerUser(models.Model):
     address = models.TextField()
     dob = models.DateField()
     phone_number = models.TextField(max_length=13)
-    photo = models.FileField(upload_to = user_directory)
+    photo = models.FileField(upload_to = user_directory, blank=True)
     is_email_verified = models.BooleanField(default=False) 
     token = models.CharField(max_length = 30, primary_key = True)
 
