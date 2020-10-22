@@ -33,7 +33,7 @@
         <ul>
             <li><i class="fa fa-home" aria-hidden="true"></i><a href="{% url 'index' %}"> Home</a></li>
             <li><i class="fa fa-shopping-cart" aria-hidden="true"></i><a href="#"> Shop</a></li>
-            <li><i class="fa fa-users" aria-hidden="true"></i><a href="#"> About Us</a></li>
+            <li><i aria-hidden="true" class="fa fa-users"></i><a href="{% url 'about_us' %}"> About Us</a></li>
             {% if user.is_authenticated %}
               <li><i class="fa fa-dashboard" aria-hidden="true"></i><a href="#" > Profile</a></li>
               <li><i class="fa fa-sign-out" aria-hidden="true"></i><a href="{% url 'logout' %}" > Logout</a></li>
