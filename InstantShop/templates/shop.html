@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>InstantShop-Shop</title>
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/card.css' %}">
+{% endblock %}
+
+{% block main %}
+    <div class="main">
+
+        <!--Search box start-->
+        <div class="search">
+            <form action="#" method="get" id="search-form">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Search" name="search-text" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <input type="image" src="{% static 'images/favicon.png' %}" alt="search-icon" class="input-group-text" id="basic-addon2">
+                    </div>
+                  </div>
+            </form>
+        </div>  
+        <!--Search box ends-->
+
+        <div class="content">
+            <div class="filters">
+                
+                <h1>Filters</h1>
+
+                <div class="sorting">
+                    Sort data in :<br>
+                    <input type="radio" name="sort" id="ascending" value="ascending">
+                    <label for="ascending" id="l_ascending">Ascending</label>
+                    <br>
+                    <input type="radio" name="sort" id="descending" value="descending">
+                    <label for="descending" id="l_descending">Descending</label>
+                </div>
+                <div class="range">
+                    <label for="range">Select max months of product used :</label><br>
+                    <input type="range" name="range" id="range" min="1" max="200" step="1">
+                    <div class="out"></div>
+                    <script>
+                        var out = document.getElementsByClassName("out")[0];
+                        var slider = document.getElementById("range");
+                        out.innerHTML = slider.value+" months";
+                        slider.oninput = function(){
+                            out.innerHTML = this.value + " months";
+                        }
+                    </script>
+                </div>
+            </div>
+            <div class="products">
+                <div class="card">
+                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
+                    <div class="details">
+                        <p id="title">Title</p>
+                        <p id="price">Price</p>
+                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
+                        <div class="links">
+                            <a href="#" id="view">View</a>
+                            <a href="#" id="add-to-cart">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
+                    <div class="details">
+                        <p id="title">Title</p>
+                        <p id="price">Price</p>
+                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
+                        <div class="links">
+                            <a href="#" id="view">View</a>
+                            <a href="#" id="add-to-cart">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
+                    <div class="details">
+                        <p id="title">Title</p>
+                        <p id="price">Price</p>
+                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
+                        <div class="links">
+                            <a href="#" id="view">View</a>
+                            <a href="#" id="add-to-cart">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
+                    <div class="details">
+                        <p id="title">Title</p>
+                        <p id="price">Price</p>
+                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
+                        <div class="links">
+                            <a href="#" id="view">View</a>
+                            <a href="#" id="add-to-cart">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
+                    <div class="details">
+                        <p id="title">Title</p>
+                        <p id="price">Price</p>
+                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
+                        <div class="links">
+                            <a href="#" id="view">View</a>
+                            <a href="#" id="add-to-cart">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
+                    <div class="details">
+                        <p id="title">Title</p>
+                        <p id="price">Price</p>
+                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
+                        <div class="links">
+                            <a href="#" id="view">View</a>
+                            <a href="#" id="add-to-cart">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
+                    <div class="details">
+                        <p id="title">Title</p>
+                        <p id="price">Price</p>
+                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
+                        <div class="links">
+                            <a href="#" id="view">View</a>
+                            <a href="#" id="add-to-cart">Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
