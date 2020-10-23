@@ -6,6 +6,7 @@
 }
 
 .web-name{
+    z-index: 1;
     background-color: rgb(43, 22, 22);
     color: white;
     padding: 20px;
@@ -19,6 +20,7 @@ body{min-width: 262px;}
 .web-name span{margin-left: 20px;}
 
 nav{
+    z-index: 1;
     height: 44px;
     position: sticky;
     top: 66px;
@@ -41,8 +43,8 @@ nav ul li a:hover{color:rebeccapurple}
 nav ul li{ float:left;padding: 10px;}
 main{clear: both;}
 
-.hamburger{display: none;}
-.cross{display: none;}
+.hamburger{display: none;z-index: 1;}
+.cross{display: none; z-index:1;}
 #chk{display: none;}
 
 input{
