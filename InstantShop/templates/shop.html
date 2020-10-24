@@ -41,14 +41,6 @@
                     <label for="range">Select max months of product used :</label><br>
                     <input type="range" name="range" id="range" min="1" max="200" step="1" value="200">
                     <div class="out"></div>
-                    <script>
-                        var out = document.getElementsByClassName("out")[0];
-                        var slider = document.getElementById("range");
-                        out.innerHTML = slider.value+" months";
-                        slider.oninput = function(){
-                            out.innerHTML = this.value + " months";
-                        }
-                    </script>
                 </div>
             </div>
             <div class="products">
@@ -56,7 +48,7 @@
                     <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
                     <div class="details">
                         <p id="title">Title</p>
-                        <p id="price">Price</p>
+                        <p class="price">100</p>
                         <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
                         <div class="links">
                             <a href="#" id="view">View</a>
@@ -69,7 +61,7 @@
                     <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
                     <div class="details">
                         <p id="title">Title</p>
-                        <p id="price">Price</p>
+                        <p class="price">234897</p>
                         <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
                         <div class="links">
                             <a href="#" id="view">View</a>
@@ -82,7 +74,7 @@
                     <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
                     <div class="details">
                         <p id="title">Title</p>
-                        <p id="price">Price</p>
+                        <p class="price">89</p>
                         <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
                         <div class="links">
                             <a href="#" id="view">View</a>
@@ -95,7 +87,7 @@
                     <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
                     <div class="details">
                         <p id="title">Title</p>
-                        <p id="price">Price</p>
+                        <p class="price">23234</p>
                         <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
                         <div class="links">
                             <a href="#" id="view">View</a>
@@ -108,7 +100,7 @@
                     <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
                     <div class="details">
                         <p id="title">Title</p>
-                        <p id="price">Price</p>
+                        <p class="price">83974</p>
                         <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
                         <div class="links">
                             <a href="#" id="view">View</a>
@@ -121,7 +113,7 @@
                     <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
                     <div class="details">
                         <p id="title">Title</p>
-                        <p id="price">Price</p>
+                        <p class="price">2098384</p>
                         <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
                         <div class="links">
                             <a href="#" id="view">View</a>
@@ -134,7 +126,7 @@
                     <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
                     <div class="details">
                         <p id="title">Title</p>
-                        <p id="price">Price</p>
+                        <p class="price">98492</p>
                         <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
                         <div class="links">
                             <a href="#" id="view">View</a>
@@ -143,6 +135,62 @@
                     </div>
                 </div>
             </div>
+            <script>
+                var out = document.getElementsByClassName("out")[0];
+                var slider = document.getElementById("range");
+                out.innerHTML = slider.value+" months";
+                slider.oninput = function(){
+                    out.innerHTML = this.value + " months";
+                }
+
+
+                var ascending = document.getElementById("ascending");
+                ascending.oninput = function(){
+                    var arr = [];
+                    var cards = document.getElementsByClassName("card");
+
+                    for(var i=0;i<cards.length;i++){
+                        arr.push(cards[i]);
+                    }
+
+                    arr.sort(function(a,b){
+                        var n1 = a.getElementsByClassName("price")[0].innerHTML;
+                        var n2 = b.getElementsByClassName("price")[0].innerHTML;
+                        alert(Number(n1))
+                        return (Number(n1)-Number(n2));
+                    });
+
+                    var products = document.getElementsByClassName("products")[0];
+                    products.innerHTML = "";
+                    for(var i=0;i<arr.length;i++){
+                        products.appendChild(arr[i]);
+                    }
+                }
+
+
+                var descending = document.getElementById("descending");
+                descending.oninput = function(){
+                    var arr = [];
+                    var cards = document.getElementsByClassName("card");
+
+                    for(var i=0;i<cards.length;i++){
+                        arr.push(cards[i]);
+                    }
+
+                    arr.sort(function(a,b){
+                        var n1 = a.getElementsByClassName("price")[0].innerHTML;
+                        var n2 = b.getElementsByClassName("price")[0].innerHTML;
+                        alert(Number(n1))
+                        return -((Number(n1)-Number(n2)));
+                    });
+
+                    var products = document.getElementsByClassName("products")[0];
+                    products.innerHTML = "";
+                    for(var i=0;i<arr.length;i++){
+                        products.appendChild(arr[i]);
+                    }
+                } 
+            </script>
         </div>
     </div>
 {% endblock %}
