@@ -6,6 +6,7 @@
 }
 
 .web-name{
+    z-index: 1;
     background-color: rgb(43, 22, 22);
     color: white;
     padding: 20px;
@@ -18,7 +19,13 @@ body{min-width: 262px;}
 
 .web-name span{margin-left: 20px;}
 
-nav{background-color: white;}
+nav{
+    z-index: 1;
+    height: 44px;
+    position: sticky;
+    top: 66px;
+    background-color: white;
+}
 
 nav ul{
     list-style: none;
@@ -31,15 +38,13 @@ nav ul li a:link, a:visited{
     color:black
 }
 
-nava ul li a:hover{color:rebeccapurple}
+nav ul li a:hover{color:rebeccapurple}
 
-nav ul li{
-    float: left;
-    padding: 10px;
-}
+nav ul li{ float:left;padding: 10px;}
+main{clear: both;}
 
-.hamburger{display: none;}
-.cross{display: none;}
+.hamburger{display: none;z-index: 1;}
+.cross{display: none; z-index:1;}
 #chk{display: none;}
 
 input{
