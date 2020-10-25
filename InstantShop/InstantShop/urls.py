@@ -27,5 +27,6 @@ urlpatterns = [
     path('register/', view.RegisterView.as_view(), name='register'),
     path('logout/', view.LogoutView.as_view(), name='logout'),
     path('about-us/', TemplateView.as_view(template_name='about-us.html'), name='about_us'),
-    path('verify-email/<str:token>', view.EmailVerificationView.as_view(), name='verify_email')
+    path('verify-email/<str:token>', view.EmailVerificationView.as_view(), name='verify_email'),
+    path('shop/', TemplateView.as_view(template_name='shop.html'), name='shop'),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
