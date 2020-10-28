@@ -24,7 +24,7 @@ class Products(models.Model):
     name = models.CharField(max_length = 40)
     description = models.TextField()
     price = models.DecimalField(max_digits = 5, decimal_places = 2) 
-    product_uploaded_on_date = models.DateField(default=datetime.date.today())
+    product_uploaded_on_date = models.DateField()
     selled = models.BooleanField(default=False)
     features = models.TextField()
     months_of_product_used = models.IntegerField()
