@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, UploadProductForm
 from django.views import View
 from django.urls import reverse
 from django.contrib.auth import logout
@@ -67,3 +67,24 @@ class EmailVerificationView(View):
         else:
             messages.error(request,'Wrong verification token.')
         return redirect(reverse('index'))
+
+
+class ProfileView(LoginRequiredMixin,View):
+    def get(self, request):
+        return render(request, 'profile.html')
+
+class UploadProductView(LoginRequiredMixin,View):
+    def get(self, request):
+        form = UploadProductForm()
+        context = {'form':form}
+        return render(request, 'product.html', context)
+
+    def post(self, request):
+        form = UploadProductForm(request.POST, request.FILES)
+        print(request.POST)
+        if form.is_valid():
+            form.save(request)
+            return redirect(reverse('upload-product'))
+        else:
+            context = {'form': form}
+            return render(request, 'product.html',context)
