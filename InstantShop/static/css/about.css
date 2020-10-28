@@ -1,82 +1,97 @@
- body{
+main{
+       background-color: rgb(43, 22, 22);
+
+}
+
+.total{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    flex-direction: column;
 }
 
 .container{
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    padding: 50px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.5s;
-    z-index:1;
+    justify-content: center ;
+    flex-wrap: wrap;
 }
 
-.social{
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.card{
+    width: 200px; height: 300px;
+    margin: 10px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.card img{
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: all 0.3s;
+}
+
+.details{
     position: absolute;
-    z-index: -1;
-    transform: translateY(0px);
-    transition: 0.5s;
-
-}
-img{
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0,0,139,0.7);
-
+    bottom: 0; left: 0;
+    background-color: #fff;
+    width: 100%;
+/*        padding: 10px 40px;*/
+    transform: translateY(100%);
+    transition: all 0.3s;
 
 }
 
-.container:hover{
-    width: 140px;
-    height: 140px;
-
+.social-media-list{
+    text-align: center;
 }
 
-.container:hover .social{
-    transition: 0.5s;
-    box-shadow: 0 0 10px rgba(0,0,139,0.7);
+.details h2{
+    text-transform: uppercase;
+    font-family: 'Raleway', sans-serif;
+    font-size: 18px;
+    color: #565656;
+    letter-spacing: 1px;
 }
 
-.container:hover .social:nth-child(1){
-    transform: rotate(-60deg) translateY(-120px);
+.details a{
+    display: inline-block;
+    padding-top: 10px;
+    margin-left: 15px;
+    color: #565656;
+    transform: translateY(50px);
+    transition: all 0.3s;
 }
 
-.container:hover .social:nth-child(2){
+.details a:first-child{
     transition-delay: 0.1s;
-    transform: rotate(-30deg) translateY(-120px);
 }
-.container:hover .social:nth-child(3){
+
+.details a:nth-child(2){
     transition-delay: 0.2s;
-    transform: rotate(0deg) translateY(-120px);
 }
-.container:hover .social:nth-child(4){
+
+.details a:last-child{
     transition-delay: 0.3s;
-    transform: rotate(30deg) translateY(-120px);
-}
-.container:hover .social:nth-child(5){
-    transition-delay: 0.4s;
-    transform: rotate(60deg) translateY(-120px);
 }
 
-i{
-    transition: 0.5s;
+.card:hover img{
+    transform: scale(1.2);
 }
 
-.social:hover i{
-    transform: rotate(360deg);
-    color: rgba(0,0,139,0.7);
+.card:hover .details, .card:hover .details a{
+    transform: none;
 }
+
+@media only screen and  (max-width:360px){
+
+    .card{
+        width: auto;
+        flex-basis: 100%;
+    }
+
+    .details h2, .details a{
+        font-size: 14px;
+    }
+
+}
+
 

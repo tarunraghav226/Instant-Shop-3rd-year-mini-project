@@ -1,34 +1,108 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About-Us</title>
-     <link rel="stylesheet" href="{% static '../static/css/about.css' %}">
 
+{% block head %}
+        <title>InstantShop-About Us</title>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <link rel="stylesheet" href="{% static '../static/css/about.css' %}">
 
-</head>
-<body>
+{% endblock %}
+{% block main %}
+    <main>
 
-<div class="container">
-    <div class="social">
-        <a href="https://github.com/nmn-gupta"> <i class="fab fa-github" aria-hidden="true" ></i></a>
-    </div>
-    <div class="social">
-        <a href="https://www.instagram.com/naman2905/"><i aria-hidden="true" class="fab fa-instagram"></i></a>
-    </div>
-    <div class="social">
-        <a href="https://www.facebook.com/profile.php?id=100006087823740"><i aria-hidden="true" class="fab fa-facebook"></i></a>
-    </div>
-    <div class="social">
-        <a href="https://www.hackerrank.com/_181500410?hr_r=1"><i aria-hidden="true" class="fab fa-hackerrank"></i></a>
-    </div>
-    <div class="social">
-        <a href="https://www.linkedin.com/in/naman-gupta-b766031ab"> <i aria-hidden="true" class="fab fa-linkedin"></i></a>
-    </div>
-    <img alt="" src="{% static '/images/profile_pictures/naman.jpg'%}">
+    <h2 style="color: white;padding-top: 30px; text-align: center; margin-top: 70px;">MENTOR</h2>
+    <div class="total">
 
-</div>
-</body>
-</html>
+        <div style="margin-left: 575px; margin-bottom: 100px;" class="card">
+
+            <img class="pic" src="" alt="">
+            <div class="details">
+                <h2 style="text-align: center;">Anand Gupta</h2>
+                <div class="social-media-list">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    <h2 style="color: white; text-align: center;">TEAM</h2>
+
+
+
+    <div class="container">
+
+        <div class="card">
+            <img src="{% static '/images/profile_pictures/naman.jpg'%}" alt="">
+            <div class="details">
+                <h2 style="text-align: center;">Naman Gupta</h2>
+                <div class="social-media-list">
+                    <a href="https://www.facebook.com/profile.php?id=100006087823740" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com/in/naman-gupta-b766031ab" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/nmn-gupta" target="_blank"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <img src="god3.jpg" alt="">
+            <div class="details">
+                <h2 style="text-align: center;">Tarun Raghav</h2>
+                <div class="social-media-list">
+                   <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <img src="god4.jpg" alt="">
+            <div class="details">
+                <h2 style="text-align: center;">abc xyz</h2>
+                <div class="social-media-list">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="god5.jpg" alt="">
+            <div class="details">
+                <h2 style="text-align: center;">abc xyz</h2>
+                <div class="social-media-list">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="god6.jpg" alt="">
+            <div class="details">
+                <h2 style="text-align: center;">abc xyz</h2>
+                <div class="social-media-list">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </main>
+
+{% endblock %}
