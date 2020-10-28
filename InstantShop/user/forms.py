@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from django.core.exceptions import ValidationError
 import datetime
-from .models import CustomerUser
+from .models import CustomerUser, Products
 from django.core.mail import send_mail
 from modules.mail import mail
 from django.contrib import messages
@@ -124,3 +124,140 @@ class SignUpForm(forms.Form):
                 token += symbols_used[random.randint(0,len(symbols_used)-1)]
             break
         return token
+
+
+class UploadProductForm(forms.Form):
+    name = forms.CharField(max_length = 40, label="Name", widget=forms.TextInput(
+        attrs={
+            'class':'form-control',
+            'label':'Name'}
+            ))
+
+    description = forms.CharField(widget = forms.Textarea(
+        attrs={
+            'class':'form-control', 
+            'label':'Description'}
+            ))
+
+    price = forms.DecimalField(max_digits = 5, decimal_places = 2, widget=forms.NumberInput(
+        attrs={'class':'form-control',
+        'label':'Name',
+        'min':'0'
+        }))
+
+    features = forms.CharField(widget = forms.Textarea(
+        attrs={'class':'form-control',
+        'label':'Features'}
+        ))
+
+    months_of_product_used = forms.IntegerField(widget=forms.NumberInput(
+        attrs={
+            'class':'form-control',
+            'label':'Months of product used',
+            'min':'0',
+            'max':'200'
+        }
+    ))
+
+    img1 = forms.ImageField(label='Image 1 (required)', required = True, widget=forms.FileInput(attrs={
+        'class':'form-control',
+    }))
+
+    img2 = forms.ImageField(label='Image 2',required = False, widget=forms.FileInput(attrs={
+        'class':'form-control',
+    }))
+
+    img3 = forms.ImageField(label='Image 3',required = False, widget=forms.FileInput(attrs={
+        'class':'form-control',
+    }))
+    
+    img4 = forms.ImageField(label='Image 4',required = False, widget=forms.FileInput(attrs={
+        'class':'form-control',
+    }))
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if name == '':
+            raise ValidationError('Name cannot be empty.')
+        else:
+            return self.cleaned_data['name'] 
+        
+    def clean_description(self):
+        description = self.cleaned_data['description']
+        if description == '':
+            raise ValidationError('Description cannot be empty.')
+        else:
+            return self.cleaned_data['description'] 
+
+    def clean_price(self):
+        prc = float(self.cleaned_data['price'])
+        if prc >=0 :
+            return self.cleaned_data['price']
+        else:
+            raise ValidationError('Price must be positive.')
+
+    def clean_months_of_product_used(self):
+        months = int(self.cleaned_data['months_of_product_used'])
+        if months >=0 and months <= 200:
+            return self.cleaned_data['months_of_product_used']
+        else:
+            raise ValidationError('Months must be between 0 and 200.')
+    
+    def clean_img1(self):
+        photo = self.cleaned_data['img1']
+        if photo and photo.size <= 700000:
+            return self.cleaned_data['img1']
+        else:
+            raise ValidationError('Photo size must be less than 700kb.')
+    
+    def clean_img2(self):
+        photo = self.cleaned_data['img2']
+
+        if not photo:
+            return self.cleaned_data['img2']
+
+        if photo.size <= 700000:
+            return self.cleaned_data['img2']
+        else:
+            raise ValidationError('Photo size must be less than 700kb.')
+
+    def clean_img3(self):
+        photo = self.cleaned_data['img3']
+
+        if not photo:
+            return self.cleaned_data['img3']
+
+        if photo.size <= 700000:
+            return self.cleaned_data['img3']
+        else:
+            raise ValidationError('Photo size must be less than 700kb.')
+    
+    def clean_img4(self):
+        photo = self.cleaned_data['img4']
+
+        if not photo:
+            return self.cleaned_data['img4']
+
+        if photo.size <= 700000:
+            return self.cleaned_data['img4']
+        else:
+            raise ValidationError('Photo size must be less than 700kb.')
+
+    def save(self, request):
+        product = Products(
+            user = request.user,
+            name = self.cleaned_data['name'],
+            description = self.cleaned_data['description'],
+            price = self.cleaned_data['price'],
+            features = self.cleaned_data['features'],
+            months_of_product_used = self.cleaned_data['months_of_product_used'],
+            product_uploaded_on_date = datetime.date.today(),
+            img1 = self.cleaned_data['img1'],
+            img2 = self.cleaned_data['img2'],
+            img3 = self.cleaned_data['img3'],
+            img4 = self.cleaned_data['img4'],
+        )
+
+        print(product.product_uploaded_on_date)
+        product.save()
+        return True
