@@ -1,0 +1,21 @@
+{% extends 'profile.html' %}
+{% load static %}
+
+{% block head %}
+    <title>InstantShop-Products</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div class="container">
+        <h1 style="text-align: center;width: 100%;">Upload New Product</h1>
+        <div class="form">
+            <form action="{% url 'upload-product' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

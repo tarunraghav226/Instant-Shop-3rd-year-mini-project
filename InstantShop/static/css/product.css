@@ -1,0 +1,28 @@
+.container{
+    margin: 20px 0px;
+    color: white;
+}
+
+.form{
+    width: 50%;
+    margin: auto;
+}
+
+@media only screen and (max-width:826px){
+    .form{width: 90%;}
+}
+
+.form form > button{
+    display: block;
+    margin: auto;
+    padding: 10px;
+    background-color: white;
+    color: brown;
+    border-radius: 10px;
+    border: none;
+}
+
+.form form > button:hover{
+    color: white;
+    background-color: brown;
+}
