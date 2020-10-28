@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>InstantShop-Profile</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block main %}
+    <div class="main">
+        <div class="left-content">
+            <div class="image">
+                <img src="../static/images/default-user-image.png" alt="">
+            </div>
+            <div class="user-details">
+                <p>
+                    Name Of the user
+                </p>
+                <p>
+                    Username: 
+                    <span>Username</span>
+                </p>
+                <p>Products Purchased: </p>
+                <p>Products Uploaded: </p>
+            </div>
+            <a href="{% url 'upload-product' %}">Upload A New Product</a>
+            <a href="#">Previous Orders</a>
+            <a href="#">See uploaded products</a>
+        </div>
+        <div class="right-content">
+            {% block right_content%}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
