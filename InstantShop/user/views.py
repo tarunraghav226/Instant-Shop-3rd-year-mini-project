@@ -88,3 +88,7 @@ class UploadProductView(LoginRequiredMixin,View):
         else:
             context = {'form': form}
             return render(request, 'product.html',context)
+
+class PreviousOrderDetailsView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'previous-orders.html')

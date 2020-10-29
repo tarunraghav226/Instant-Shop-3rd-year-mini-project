@@ -31,4 +31,5 @@ urlpatterns = [
     path('shop/', TemplateView.as_view(template_name='shop.html'), name='shop'),
     path('profile/', view.ProfileView.as_view(), name='profile'),
     path('upload-product/', view.UploadProductView.as_view(), name='upload-product'),
+    path('previous-orders/', view.PreviousOrderDetailsView.as_view(), name='previous-orders'),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

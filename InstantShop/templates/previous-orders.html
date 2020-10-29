@@ -1,0 +1,56 @@
+{% extends 'profile.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/previous-orders.css' %}">
+    <title>InstantShop-Previous Orders</title>
+{% endblock %}
+
+{% block right_content%}
+    <table>
+        <caption>
+            Previous Order Details
+        </caption>
+        <thead>
+            <tr>
+                <td>#</td>
+                <td>Order ID</td>
+                <td>Product Name</td>
+                <td>Price</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>23422</td>
+                <td>Title</td>
+                <td>234</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>23422</td>
+                <td>Title</td>
+                <td>23424</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>23422</td>
+                <td>Title</td>
+                <td>474334</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>23422</td>
+                <td>Title</td>
+                <td>23424</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>23422</td>
+                <td>Title</td>
+                <td>34334</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
