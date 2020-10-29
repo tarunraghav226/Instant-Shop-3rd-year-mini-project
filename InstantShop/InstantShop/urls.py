@@ -32,4 +32,5 @@ urlpatterns = [
     path('profile/', view.ProfileView.as_view(), name='profile'),
     path('upload-product/', view.UploadProductView.as_view(), name='upload-product'),
     path('previous-orders/', view.PreviousOrderDetailsView.as_view(), name='previous-orders'),
+    path('uploaded-products/', view.UploadedProductsView.as_view(), name='uploaded-products'),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

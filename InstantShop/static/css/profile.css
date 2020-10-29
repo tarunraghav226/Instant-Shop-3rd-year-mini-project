@@ -26,6 +26,7 @@ img{
 .right-content{
     margin-left: 29vw;
     width: 70%;
+    overflow-x: auto;
 }
 
 .user-details{
@@ -58,7 +59,10 @@ img{
         height: max-content;
     }
 
-    .right-content{margin: 7vw;}
+    .right-content{
+        margin: 7vw;
+        width: 90%;
+    }
 
     .main{flex-direction: column;}
 }

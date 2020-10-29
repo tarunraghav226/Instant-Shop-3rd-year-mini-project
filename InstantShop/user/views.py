@@ -92,3 +92,8 @@ class UploadProductView(LoginRequiredMixin,View):
 class PreviousOrderDetailsView(LoginRequiredMixin, View):
     def get(self, request):
         return render(request, 'previous-orders.html')
+
+
+class UploadedProductsView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'uploaded-products.html')
