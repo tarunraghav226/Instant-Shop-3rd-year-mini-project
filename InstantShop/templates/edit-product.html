@@ -1,0 +1,24 @@
+{% extends 'profile.html' %}
+{% load static %}
+
+{% block head %}
+    <title>InstantShop-Edit Product</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <div class="container">
+        <h1 style="text-align: center;width: 100%;">Edit Product</h1>
+        <div class="form">
+            <form action="{% url 'edit' id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="buttons">
+                    <button type="submit">Submit</button>
+                    <button type="menu" formaction="{% url 'uploaded-products' %}">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

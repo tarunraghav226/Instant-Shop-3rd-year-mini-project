@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
-from .forms import LoginForm, SignUpForm, UploadProductForm
+from .forms import LoginForm, SignUpForm, UploadProductForm, UpdateProductForm
 from django.views import View
 from django.urls import reverse
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import CustomerUser
+from .models import CustomerUser, Products
 from django.contrib import messages
 
 # Create your views here.
@@ -88,3 +88,93 @@ class UploadProductView(LoginRequiredMixin,View):
         else:
             context = {'form': form}
             return render(request, 'product.html',context)
+
+class PreviousOrderDetailsView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'previous-orders.html')
+
+
+class UploadedProductsView(LoginRequiredMixin, View):
+    def get(self, request):
+        products = Products.objects.filter(user=request.user)
+        context = {
+            'products':products
+        }
+        return render(request, 'uploaded-products.html', context)
+
+
+class DeleteProductView(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+        products = Products.objects.filter(id = kwargs['id'])
+
+        if len(products) > 0:
+            product = products[0]
+            if product.user == request.user:
+                product.delete()
+                messages.info(request, 'Product deleted successfully.')
+            else:
+                messages.error(request, 'You cannot delete this product.')
+        else:
+            messages.info(request, 'Wrong product request.')
+        return redirect(reverse('uploaded-products'))
+
+
+class EditProductView(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+        products = Products.objects.filter(id = kwargs['id'])
+
+        if len(products) > 0:
+            product = products[0]
+            if product.user == request.user:
+                data = {
+                    'name' : product.name,
+                    'description' : product.description,
+                    'price' : product.price,
+                    'features' : product.features,
+                    'months_of_product_used' : product.months_of_product_used,
+                    'img1' : product.img1,
+                    'img2' : product.img2,
+                    'img3' : product.img3,
+                    'img4' : product.img4,
+                }
+
+                update_product_form = UpdateProductForm(data = data)
+                
+                context = {
+                    'form':update_product_form,
+                    'id' : product.id
+                }
+                
+                return render(request, 'edit-product.html', context)
+            else:
+                messages.error(request, 'You are not authorized to update this product.')
+                return redirect(reverse('uploaded-products'))
+        else:
+            messages.error(request, 'Wrong product request.')
+        return redirect(reverse('uploaded-products'))
+
+    def post(self, request, **kwargs):
+
+        products = Products.objects.filter(id = kwargs['id'])
+        
+        if len(products) > 0:
+            product = products[0]
+            if product.user == request.user:
+                form = UpdateProductForm(request.POST, request.FILES)
+                if form.is_valid():
+                    print(request.POST)
+                    if form.save(kwargs['id']):
+                        messages.error(request, 'Product updated successfully.')
+                    else:
+                        messages.error(request, 'Something went wrong.')
+                else:
+                    context = {
+                        'form' : form,
+                        'id' : product.id
+                    }
+                    return render(request, 'edit-product.html', context)
+            else:
+                messages.error('You are not authorized to edit this product.')
+        else:
+            messages.error(request, 'Wrong product request.')
+        return redirect(reverse('uploaded-products'))

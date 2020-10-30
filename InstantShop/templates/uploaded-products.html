@@ -1,0 +1,45 @@
+{% extends 'profile.html' %}
+{% load static %}
+
+{% block head %}
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/previous-orders.css' %}">
+{% endblock %}
+
+{% block right_content %}
+    <table style="width: 80%;">
+        <caption>
+            Products Uploaded
+        </caption>
+        <thead>
+            <tr>
+                <td>#</td>
+                <td>Product Name</td>
+                <td>Time of product used(in months)</td>
+                <td>Selled</td>
+                <td>Price</td>
+                <td>Edit/Delete</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.months_of_product_used }}</td>
+                {% if product.selled == true %}
+                    <td><span class="material-icons selled">done</span></td>
+                {% else %}
+                    <td><span class="material-icons not-selled">clear</span></td>
+                {% endif %}
+                <td>{{ product.price }}</td>
+                <td>
+                    <span class="material-icons"><a href="{% url 'edit' product.id %}" class="edit">edit</a></span>
+                    <span class="material-icons"><a href="{% url 'delete' product.id %}" class="delete" onclick="return confirm('Are you sure to delete this product?');">delete</a></span>
+                </td>
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,67 @@
+table{
+    margin: 20px auto;
+    border-collapse: collapse;
+    color: white;
+    width: 50%;
+}
+
+caption{
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    caption-side: top;
+    font-weight: bold;
+}
+
+table thead tr{
+    background-color: rgba(145, 51, 51, 0.61);
+}
+
+table thead tr td:first-child{
+    border-top-left-radius: 20px;
+}
+
+table thead tr td:last-child{
+    border-top-right-radius: 20px;
+}
+
+table thead tr td{
+    padding: 20px;
+    text-align: center;
+}
+
+tbody tr td{
+    text-align: center;
+    padding: 20px;
+}
+
+tbody tr:nth-child(even){
+    background-color: rgba(145, 144, 144, 0.925);
+}
+
+tbody tr:nth-child(odd){
+    background-color: rgb(190, 188, 188);
+}
+
+tbody tr:hover{
+    background-color: rgba(146, 78, 78, 0.568);
+}
+
+tbody tr:last-child td:last-child{
+    border-bottom-right-radius: 20px;
+}
+
+tbody tr:last-child td:first-child{
+    border-bottom-left-radius: 20px;
+}
+
+tr td span a{
+    color: white;
+}
+
+.edit:visited, .edit:link, .delete:link, .delete:visited{color: white;}
+
+.edit:hover{color: blue;}
+.delete:hover{color:red}
+.selled{color:green;}
+.not-selled{color:red;}
