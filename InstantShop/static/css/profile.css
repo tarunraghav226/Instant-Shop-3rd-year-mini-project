@@ -13,7 +13,8 @@
 }
 
 img{
-    width: 30%;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
 }
 .image{
@@ -70,20 +71,24 @@ img{
     color: white;
 }
 
+.upload-profile:visited, .upload-profile:link{color:white}
+
 .upload-profile{
-    color: white;
     position: absolute;
     bottom: 0px;
     text-align: center;
     background: rgba(128, 128, 128, 0.90);
-    width: 27%;
+    width: 100px;
+    height: 100px;
     padding: 3px;
-    border-bottom-left-radius: 50%;
-    border-bottom-right-radius: 50%;
+    border-radius: 50%;
     display: none;
 }
 
-img:hover ~ .upload-profile{display: block;}
+img:hover ~ .upload-profile{
+    display: flex;
+    align-items: center;
+}
 
 @media only screen and (max-width:826px){
     .left-content{
