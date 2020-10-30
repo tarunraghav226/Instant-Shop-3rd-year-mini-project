@@ -102,6 +102,8 @@ class UploadedProductsView(LoginRequiredMixin, View):
         }
         return render(request, 'uploaded-products.html', context)
 
+    def post(self, request):
+        return redirect(reverse('uploaded-products'))
 
 class DeleteProductView(LoginRequiredMixin, View):
     def get(self, request, **kwargs):
