@@ -308,3 +308,26 @@ class UpdateProductForm(UploadProductForm):
             return True
         else:
             return False
+
+
+class ProfilePhotoForm(forms.Form):
+    photo = forms.ImageField()
+
+    def clean_photo(self):
+        photo = self.cleaned_data['photo']
+
+        if photo and photo.size <= 700000:
+            return self.cleaned_data['photo']
+        else:
+            ValidationError("Something went wrong.")
+
+    def save(self, user):
+        c_users = CustomerUser.objects.filter(user = user)
+
+        if len(c_users) > 0:
+            c_user = c_users[0] 
+            c_user.photo = self.cleaned_data['photo']
+            c_user.save()
+            return True
+        else:
+            return False

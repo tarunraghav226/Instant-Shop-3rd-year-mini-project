@@ -51,6 +51,24 @@ img{
 .left-content >   a:visited{color: white;}
 .left-content > a:hover{background-color: white;color: brown;}
 
+.data{
+    margin-top: 20px;
+}
+
+.container{
+    width: 90%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin:20px;
+    text-align: center;
+}
+
+.container:hover{
+    background-color: rgba(153, 53, 53, 0.562);
+    color: white;
+}
+
 @media only screen and (max-width:826px){
     .left-content{
         position: relative;
