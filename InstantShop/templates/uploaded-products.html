@@ -23,61 +23,23 @@
             </tr>
         </thead>
         <tbody>
+            {% for product in products %}
             <tr>
-                <td>1</td>
-                <td>Name</td>
-                <td>32</td>
-                <td><span class="material-icons selled">done</span></td>
-                <td>234</td>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.months_of_product_used }}</td>
+                {% if product.selled == true %}
+                    <td><span class="material-icons selled">done</span></td>
+                {% else %}
+                    <td><span class="material-icons not-selled">clear</span></td>
+                {% endif %}
+                <td>{{ product.price }}</td>
                 <td>
                     <span class="material-icons"><a href="#" class="edit">edit</a></span>
-                    <span class="material-icons"><a href="#" class="delete">delete</a></span>
+                    <span class="material-icons"><a href="#" class="delete" onclick="return confirm('Are you sure to delete this product?');">delete</a></span>
                 </td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>Name</td>
-                <td>32</td>
-                <td><span class="material-icons not-selled">clear</span></td>
-                <td>234</td>
-                <td>
-                    <span class="material-icons"><a href="#" class="edit">edit</a></span>
-                    <span class="material-icons"><a href="#" class="delete">delete</a></span>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Name</td>
-                <td>32</td>
-                <td><span class="material-icons selled">done</span></td>
-                <td>234</td>
-                <td>
-                    <span class="material-icons"><a href="#" class="edit">edit</a></span>
-                    <span class="material-icons"><a href="#" class="delete">delete</a></span>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Name</td>
-                <td>32</td>
-                <td><span class="material-icons selled">done</span></td>
-                <td>234</td>
-                <td>
-                    <span class="material-icons"><a href="#" class="edit">edit</a></span>
-                    <span class="material-icons"><a href="#" class="delete">delete</a></span>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Name</td>
-                <td>32</td>
-                <td><span class="material-icons selled">done</span></td>
-                <td>234</td>
-                <td>
-                    <span class="material-icons"><a href="#" class="edit">edit</a></span>
-                    <span class="material-icons"><a href="#" class="delete">delete</a></span>
-                </td>
-            </tr>
+            {% endfor%}
         </tbody>
     </table>
 {% endblock %}
