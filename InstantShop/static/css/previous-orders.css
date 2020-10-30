@@ -59,6 +59,8 @@ tr td span a{
     color: white;
 }
 
+.edit:visited, .edit:link, .delete:link, .delete:visited{color: white;}
+
 .edit:hover{color: blue;}
 .delete:hover{color:red}
 .selled{color:green;}
