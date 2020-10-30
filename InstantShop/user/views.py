@@ -178,3 +178,14 @@ class EditProductView(LoginRequiredMixin, View):
         else:
             messages.error(request, 'Wrong product request.')
         return redirect(reverse('uploaded-products'))
+
+class ShowProductView(View):
+
+    def get(self, request):
+        products = Products.objects.all()
+        
+        context = {
+            'products' : products
+        } 
+
+        return render(request, 'shop.html', context)
