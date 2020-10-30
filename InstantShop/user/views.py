@@ -4,7 +4,7 @@ from django.views import View
 from django.urls import reverse
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import CustomerUser
+from .models import CustomerUser, Products
 from django.contrib import messages
 
 # Create your views here.
@@ -96,4 +96,24 @@ class PreviousOrderDetailsView(LoginRequiredMixin, View):
 
 class UploadedProductsView(LoginRequiredMixin, View):
     def get(self, request):
-        return render(request, 'uploaded-products.html')
+        products = Products.objects.filter(user=request.user)
+        context = {
+            'products':products
+        }
+        return render(request, 'uploaded-products.html', context)
+
+
+class DeleteProductView(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+        products = Products.objects.filter(id = kwargs['id'])
+
+        if len(products) > 0:
+            product = products[0]
+            if product.user == request.user:
+                product.delete()
+                messages.info(request, 'Product deleted successfully.')
+            else:
+                messages.error(request, 'You cannot delete this product.')
+        else:
+            messages.info(request, 'Wrong product request.')
+        return redirect(reverse('uploaded-products'))

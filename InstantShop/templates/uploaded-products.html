@@ -36,7 +36,7 @@
                 <td>{{ product.price }}</td>
                 <td>
                     <span class="material-icons"><a href="#" class="edit">edit</a></span>
-                    <span class="material-icons"><a href="#" class="delete" onclick="return confirm('Are you sure to delete this product?');">delete</a></span>
+                    <span class="material-icons"><a href="{% url 'delete' product.id %}" class="delete" onclick="return confirm('Are you sure to delete this product?');">delete</a></span>
                 </td>
             </tr>
             {% endfor%}
