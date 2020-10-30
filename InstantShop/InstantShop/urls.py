@@ -28,7 +28,7 @@ urlpatterns = [
     path('logout/', view.LogoutView.as_view(), name='logout'),
     path('about-us/', TemplateView.as_view(template_name='about-us.html'), name='about_us'),
     path('verify-email/<str:token>', view.EmailVerificationView.as_view(), name='verify_email'),
-    path('shop/', TemplateView.as_view(template_name='shop.html'), name='shop'),
+    path('shop/', view.ShowProductView.as_view(), name='shop'),
     path('profile/', view.ProfileView.as_view(), name='profile'),
     path('upload-product/', view.UploadProductView.as_view(), name='upload-product'),
     path('previous-orders/', view.PreviousOrderDetailsView.as_view(), name='previous-orders'),

@@ -13,10 +13,12 @@
 }
 
 img{
-    width: 30%;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
 }
 .image{
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,6 +52,43 @@ img{
 
 .left-content >   a:visited{color: white;}
 .left-content > a:hover{background-color: white;color: brown;}
+
+.data{
+    margin-top: 20px;
+}
+
+.containers{
+    width: 90%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    margin:20px;
+    text-align: center;
+}
+
+.containers:hover{
+    background-color: rgba(153, 53, 53, 0.562);
+    color: white;
+}
+
+.upload-profile:visited, .upload-profile:link{color:white}
+
+.upload-profile{
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    background: rgba(128, 128, 128, 0.90);
+    width: 100px;
+    height: 100px;
+    padding: 3px;
+    border-radius: 50%;
+    display: none;
+}
+
+img:hover ~ .upload-profile{
+    display: flex;
+    align-items: center;
+}
 
 @media only screen and (max-width:826px){
     .left-content{

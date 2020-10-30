@@ -44,96 +44,22 @@
                 </div>
             </div>
             <div class="products">
-                <div class="card">
-                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
-                    <div class="details">
-                        <p id="title">Title</p>
-                        <p class="price">100</p>
-                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
-                        <div class="links">
-                            <a href="#" id="view">View</a>
-                            <a href="#" id="add-to-cart">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="card">
-                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
-                    <div class="details">
-                        <p id="title">Title</p>
-                        <p class="price">234897</p>
-                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
-                        <div class="links">
-                            <a href="#" id="view">View</a>
-                            <a href="#" id="add-to-cart">Add to cart</a>
+                {% for product in products %}
+                    <div class="card">
+                        <div class="image"><img src="{{ product.img1.url }}" alt=""></div>
+                        <div class="details">
+                            <p id="title">{{ product.name }}</p>
+                            <p class="price">{{ product.price }}</p>
+                            <p class="old" style="display: none;">{{ product.months_of_product_used }}</p>
+                            <p id="description">{{ product.description }}</p>
+                            <div class="links">
+                                <a href="#" id="view">View</a>
+                                <a href="#" id="add-to-cart">Add to cart</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="card">
-                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
-                    <div class="details">
-                        <p id="title">Title</p>
-                        <p class="price">89</p>
-                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
-                        <div class="links">
-                            <a href="#" id="view">View</a>
-                            <a href="#" id="add-to-cart">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
-                    <div class="details">
-                        <p id="title">Title</p>
-                        <p class="price">23234</p>
-                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
-                        <div class="links">
-                            <a href="#" id="view">View</a>
-                            <a href="#" id="add-to-cart">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
-                    <div class="details">
-                        <p id="title">Title</p>
-                        <p class="price">83974</p>
-                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
-                        <div class="links">
-                            <a href="#" id="view">View</a>
-                            <a href="#" id="add-to-cart">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
-                    <div class="details">
-                        <p id="title">Title</p>
-                        <p class="price">2098384</p>
-                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
-                        <div class="links">
-                            <a href="#" id="view">View</a>
-                            <a href="#" id="add-to-cart">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="image"><img src="../static/images/home-page/home-page1.jpg" alt=""></div>
-                    <div class="details">
-                        <p id="title">Title</p>
-                        <p class="price">98492</p>
-                        <p id="description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus fugit dolor a ad harum cupiditate reprehenderit officiis dolorem ipsum obcaecati nihil ab illo temporibus minus quis dolore modi, illum, sit explicabo aperiam voluptas similique, incidunt veritatis ullam! Earum, corporis. Asperiores.</p>
-                        <div class="links">
-                            <a href="#" id="view">View</a>
-                            <a href="#" id="add-to-cart">Add to cart</a>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
             <script>
                 var out = document.getElementsByClassName("out")[0];
@@ -141,6 +67,21 @@
                 out.innerHTML = slider.value+" months";
                 slider.oninput = function(){
                     out.innerHTML = this.value + " months";
+
+                    var filterVal = Number(this.value);
+                    var cards = document.getElementsByClassName("card");
+
+                    for(var i=0;i<cards.length;i++){
+                        var usedTime = Number(cards[i].getElementsByClassName("old")[0].innerHTML);
+                        
+                        if(usedTime > filterVal){
+                            cards[i].style.display = "none";
+                        }
+                        else{
+                            cards[i].style.display = "initial";
+                        }
+                    }
+
                 }
 
 

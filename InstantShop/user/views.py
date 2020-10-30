@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import LoginForm, SignUpForm, UploadProductForm, UpdateProductForm
+from .forms import LoginForm, SignUpForm, UploadProductForm, UpdateProductForm, ProfilePhotoForm
 from django.views import View
 from django.urls import reverse
 from django.contrib.auth import logout
@@ -71,7 +71,21 @@ class EmailVerificationView(View):
 
 class ProfileView(LoginRequiredMixin,View):
     def get(self, request):
-        return render(request, 'profile.html')
+        context = {
+            'dp' : CustomerUser.objects.get(user = request.user).photo
+        }
+        return render(request, 'profile.html', context)
+    
+    def post(self, request):
+        form = ProfilePhotoForm(request.POST, request.FILES)
+        if form.is_valid():
+            if form.save(request.user):
+                messages.error(request, 'Updated successfully.')
+            else:
+                messages.error(request, 'Something went wrong.')
+        else:
+            messages.error(request, "Either you didn't uploaded a photo or photo must not exceed 700kb size.")
+        return redirect(reverse('profile'))
 
 class UploadProductView(LoginRequiredMixin,View):
     def get(self, request):
@@ -102,6 +116,8 @@ class UploadedProductsView(LoginRequiredMixin, View):
         }
         return render(request, 'uploaded-products.html', context)
 
+    def post(self, request):
+        return redirect(reverse('uploaded-products'))
 
 class DeleteProductView(LoginRequiredMixin, View):
     def get(self, request, **kwargs):
@@ -178,3 +194,14 @@ class EditProductView(LoginRequiredMixin, View):
         else:
             messages.error(request, 'Wrong product request.')
         return redirect(reverse('uploaded-products'))
+
+class ShowProductView(View):
+
+    def get(self, request):
+        products = Products.objects.all()
+        
+        context = {
+            'products' : products
+        } 
+
+        return render(request, 'shop.html', context)

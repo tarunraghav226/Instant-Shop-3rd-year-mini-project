@@ -4,32 +4,105 @@
 {% block head %}
     <title>InstantShop-Profile</title>
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block main %}
     <div class="main">
         <div class="left-content">
             <div class="image">
-                <img src="../static/images/default-user-image.png" alt="">
+                <img src="{{ dp.url }}" alt="user-dp">
+                <a href="#" class="upload-profile" data-toggle="modal" data-target="#updateProfilePhotoModal">
+                    Update Photo
+                </a>
             </div>
             <div class="user-details">
-                <p>
-                    Name Of the user
-                </p>
+                <p> {{user.first_name}} </p>
                 <p>
                     Username: 
-                    <span>Username</span>
+                    <span>{{ user.username }}</span>
                 </p>
-                <p>Products Purchased: </p>
-                <p>Products Uploaded: </p>
             </div>
+            <a href="{% url 'profile' %}">Dashboard</a>
             <a href="{% url 'upload-product' %}">Upload A New Product</a>
             <a href="{% url 'previous-orders' %}">Previous Orders</a>
             <a href="{% url 'uploaded-products' %}">See uploaded products</a>
         </div>
         <div class="right-content">
+              
+              <div class="modal fade" id="updateProfilePhotoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLongTitle" style="color: gray;">Update Profile Photo</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <label for="photo">Choose profile photo:</label>
+                            <input type="file" name="photo" id="photo">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                </div>
+              </div>
             {% block right_content%}
+                <div class="data">
+                        <div class="containers">
+                            <span class="label">Total Products Purchased: </span>
+                            <span class="result">23</span>
+                        </div>
+
+                        <div class="containers">
+                            <span class="label">Total Products Uploaded: </span>
+                            <span class="result">34</span>
+                        </div>
+                        
+                        <div class="containers">
+                            <span class="label">Total Products Available: </span>
+                            <span class="result">343</span>
+                        </div>
+
+                        <div class="containers">
+                            <span class="label">Total Users: </span>
+                            <span class="result">123</span>
+                        </div>
+                </div>
             {% endblock %}
         </div>
     </div>
-{% endblock %}
+    <script>
+        var containers = document.getElementsByClassName("result");
+        delay();
+
+        function delay(){
+            for(var i=0;i < containers.length; i++){
+                var value = Number(containers[i].innerHTML);
+                animateValue(containers[i],0, value, 1000);
+            }
+        }
+
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+    </script>
+{% endblock %}-
