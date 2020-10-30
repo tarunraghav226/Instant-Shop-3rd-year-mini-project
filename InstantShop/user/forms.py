@@ -261,3 +261,50 @@ class UploadProductForm(forms.Form):
         print(product.product_uploaded_on_date)
         product.save()
         return True
+
+
+
+class UpdateProductForm(UploadProductForm):
+    img1 = forms.ImageField(label='Image 1', required = False, widget=forms.FileInput(attrs={
+        'class':'form-control',
+    }))
+
+    def clean_img1(self):
+        photo = self.cleaned_data['img1']
+
+        if not photo:
+            return self.cleaned_data['img1']
+
+        if photo.size <= 700000:
+            return self.cleaned_data['img1']
+        else:
+            raise ValidationError('Photo size must be less than 700kb.')
+
+    def save(self, id):
+        products = Products.objects.filter(id = id)
+        
+        if len(products) > 0:
+            product = products[0]
+
+            product.name = self.cleaned_data['name']
+            product.description = self.cleaned_data['description']
+            product.price = self.cleaned_data['price']
+            product.features = self.cleaned_data['features']
+            product.months_of_product_used = self.cleaned_data['months_of_product_used']
+            
+            if self.cleaned_data['img1'] != '':
+                product.img1 = self.cleaned_data['img1']
+                
+            if self.cleaned_data['img2'] != '':
+                product.img2 = self.cleaned_data['img2']
+
+            if self.cleaned_data['img3'] != '':
+                product.img3 = self.cleaned_data['img3']
+                
+            if self.cleaned_data['img4'] != '':
+                product.img1 = self.cleaned_data['img4']
+
+            product.save()
+            return True
+        else:
+            return False
