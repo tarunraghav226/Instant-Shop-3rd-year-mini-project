@@ -90,7 +90,11 @@ class ProfileView(LoginRequiredMixin,View):
 class UploadProductView(LoginRequiredMixin,View):
     def get(self, request):
         form = UploadProductForm()
-        context = {'form':form}
+        context = {            
+            'form':form,
+            'dp' : CustomerUser.objects.get(user = request.user).photo
+
+        }
         return render(request, 'product.html', context)
 
     def post(self, request):
@@ -100,11 +104,17 @@ class UploadProductView(LoginRequiredMixin,View):
             form.save(request)
             return redirect(reverse('upload-product'))
         else:
-            context = {'form': form}
+            context = {
+                'form': form,
+                'dp' : CustomerUser.objects.get(user = request.user).photo
+            }
             return render(request, 'product.html',context)
 
 class PreviousOrderDetailsView(LoginRequiredMixin, View):
     def get(self, request):
+        context={
+            'dp' : CustomerUser.objects.get(user = request.user).photo
+        }
         return render(request, 'previous-orders.html')
 
 
@@ -112,7 +122,8 @@ class UploadedProductsView(LoginRequiredMixin, View):
     def get(self, request):
         products = Products.objects.filter(user=request.user)
         context = {
-            'products':products
+            'products':products,
+            'dp' : CustomerUser.objects.get(user = request.user).photo
         }
         return render(request, 'uploaded-products.html', context)
 
@@ -158,7 +169,8 @@ class EditProductView(LoginRequiredMixin, View):
                 
                 context = {
                     'form':update_product_form,
-                    'id' : product.id
+                    'id' : product.id,
+                    'dp' : CustomerUser.objects.get(user = request.user).photo
                 }
                 
                 return render(request, 'edit-product.html', context)
@@ -186,7 +198,8 @@ class EditProductView(LoginRequiredMixin, View):
                 else:
                     context = {
                         'form' : form,
-                        'id' : product.id
+                        'id' : product.id,
+                        'dp' : CustomerUser.objects.get(user = request.user).photo
                     }
                     return render(request, 'edit-product.html', context)
             else:
@@ -201,7 +214,8 @@ class ShowProductView(View):
         products = Products.objects.all()
         
         context = {
-            'products' : products
+            'products' : products,
+            'dp' : CustomerUser.objects.get(user = request.user).photo
         } 
 
         return render(request, 'shop.html', context)
