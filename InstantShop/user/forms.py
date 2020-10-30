@@ -292,16 +292,16 @@ class UpdateProductForm(UploadProductForm):
             product.features = self.cleaned_data['features']
             product.months_of_product_used = self.cleaned_data['months_of_product_used']
             
-            if self.cleaned_data['img1'] != '':
+            if self.cleaned_data['img1'] != None:
                 product.img1 = self.cleaned_data['img1']
                 
-            if self.cleaned_data['img2'] != '':
+            if self.cleaned_data['img2'] != None:
                 product.img2 = self.cleaned_data['img2']
 
-            if self.cleaned_data['img3'] != '':
+            if self.cleaned_data['img3'] != None:
                 product.img3 = self.cleaned_data['img3']
                 
-            if self.cleaned_data['img4'] != '':
+            if self.cleaned_data['img4'] != None:
                 product.img1 = self.cleaned_data['img4']
 
             product.save()
