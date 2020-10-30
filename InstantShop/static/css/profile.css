@@ -17,6 +17,7 @@ img{
     border-radius: 50%;
 }
 .image{
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,7 +56,7 @@ img{
     margin-top: 20px;
 }
 
-.container{
+.containers{
     width: 90%;
     background-color: white;
     border-radius: 20px;
@@ -64,10 +65,25 @@ img{
     text-align: center;
 }
 
-.container:hover{
+.containers:hover{
     background-color: rgba(153, 53, 53, 0.562);
     color: white;
 }
+
+.upload-profile{
+    color: white;
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    background: rgba(128, 128, 128, 0.90);
+    width: 27%;
+    padding: 3px;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    display: none;
+}
+
+img:hover ~ .upload-profile{display: block;}
 
 @media only screen and (max-width:826px){
     .left-content{
