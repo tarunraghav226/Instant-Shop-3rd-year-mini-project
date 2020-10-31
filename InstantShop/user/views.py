@@ -215,7 +215,6 @@ class ShowProductView(View):
         
         context = {
             'products' : products,
-            'dp' : CustomerUser.objects.get(user = request.user).photo
         } 
 
         return render(request, 'shop.html', context)
