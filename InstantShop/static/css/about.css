@@ -3,10 +3,26 @@ main{
 
 }
 
-.total{
+.mentor{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
 }
+
+.top{padding-top: 20px;}
+.bottom{margin-top: 20px;}
+
+.top > h2{
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
+ .bottom > h2{
+     font-weight: bold;
+     text-align: center;
+     color: white;
+ }
 
 .container{
     display: flex;
