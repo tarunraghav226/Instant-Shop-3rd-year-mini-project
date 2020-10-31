@@ -1,7 +1,55 @@
 main{
     background-color: rgb(43, 22, 22);
 }
+.productImage img{
+    height: 450px;
+    width: 300px;
+}
 
 .features form{
     margin-top: 15px;
+    style:"color: white;"
+}
+
+.comments{
+
+    display: flex;
+}
+.comments img{
+    margin-top: 50px;
+    margin-left:260px;
+    height:40px;width: 40px;
+    border-radius: 50%;
+}
+
+.comments h3{
+    margin-top: 50px;
+    margin-left: 10px;
+        color: blanchedalmond;
+
+}
+
+.comments p{
+    margin-top: 50px;
+        color: blanchedalmond;
+
+}
+.comment h1{
+    margin-left: 220px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 25px;
+    color: blanchedalmond;
+}
+
+.comment p{
+    margin-left: 400px;
+    color: wheat;
+}
+
+.usercomment{
+    margin-left: 250px;
+    margin-top: 150px;
+    color: ghostwhite;
+
 }
