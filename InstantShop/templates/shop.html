@@ -54,7 +54,7 @@
                             <p class="old" style="display: none;">{{ product.months_of_product_used }}</p>
                             <p id="description">{{ product.description }}</p>
                             <div class="links">
-                                <a href="#" id="view">View</a>
+                                <a href="{% url 'product-view' product.id %}" id="view">View</a>
                                 <a href="#" id="add-to-cart">Add to cart</a>
                             </div>
                         </div>

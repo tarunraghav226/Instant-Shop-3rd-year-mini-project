@@ -218,3 +218,21 @@ class ShowProductView(View):
         } 
 
         return render(request, 'shop.html', context)
+
+
+class ProductView(View):
+    def get(self, request, **kwargs):
+        id = kwargs['id']
+        product = Products.objects.filter(id=id)
+        
+        if len(product) > 0:
+            context ={
+                'product' : product[0]
+            }
+
+            return render(request, 'product-view.html', context)
+        else:
+            messages.error(request, 'No Product found.')
+            return redirect(reverse('shop'))
+
+
