@@ -34,7 +34,7 @@ main{
         color: blanchedalmond;
 
 }
-.comment h1{
+.commentsection h1{
     margin-left: 220px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -42,7 +42,7 @@ main{
     color: blanchedalmond;
 }
 
-.comment p{
+.commentsection p{
     margin-left: 400px;
     color: wheat;
 }
@@ -53,3 +53,5 @@ main{
     color: ghostwhite;
 
 }
+
+
