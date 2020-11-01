@@ -2,111 +2,43 @@
 {% load static %}
 
 {% block head %}
-        <title>InstantShop-Product-View</title>
-
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+    <title>InstantShop-Product-View</title>
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
     <link rel="stylesheet" href="{% static '../static/css/product-view.css' %}">
-
 {% endblock %}
+
 {% block main %}
-    <main>
 
-    <section class="text-gray-700 body-font overflow-hidden">
-  <div class="container px-5 py-24 mx-auto">
-    <div class="lg:w-4/5 mx-auto flex flex-wrap">
-        <div class="productImage">
-      <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="{% static '/images/dummy.jpg'%}">
-        </div>
-            <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-        <h1 style="color:navajowhite ;" class="text-gray-900 text-3xl title-font font-medium mb-1">Titan Wrist Watch</h1>
-        <div class="flex mb-4">
-          <span class="flex items-center">
-
-            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-
-            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-orange-500" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-            </svg>
-
-            <span style="color: white;" class="text-gray-600 ml-3">4 Reviews</span>
-          </span>
-
-        </div>
-        <p style="color: #c4dce8;" class="leading-relaxed">Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine tumeric.</p>
-<div class="features">
-          <form  action="" method="get">
-              <label for="feature"><b>Features</b></label><br>
-  <input type="text" >
-          </form>
-</div>
-
-        <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
-
-        </div>
-
-
+  <div class="main">
+    <div class="product-data">
+      <div class="product-image">
+        <img alt="product image" src="{{ product.img1.url }}">
+      </div>
+      <div class="product-des">
+        <span>{{ product.name }}</span>
+        <span>{{ product.description }}</span>
+        <h3>Features</h3>
+        <span>{{ product.features }}</span>
         <div class="flex">
-          <span style="color:navajowhite;" class="title-font font-medium text-2xl text-gray-900">$58.00</span>
-          <button style="" class="flex ml-auto text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded">Buy Now</button>
+          <span style="color:navajowhite;" class="title-font font-medium text-2xl text-gray-900">&#8377; {{ product.price }}</span>
+          <button class="flex ml-auto text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded">Buy Now</button>
         </div>
       </div>
     </div>
-  </div>
-</section>
-        <hr>
-<div class="commentsection">
-        <h1>Comments Section</h1>
-        <hr>
-        <div class="comments">
-        <img  src="{% static '/images/dummy.jpg'%}">
-            <h3><b>Naman</b></h3>
+    <div class="product-comments">
+      <h1>Comments</h1>
+      <hr style="border: 1px solid blanchedalmond;">
+      
+      <div class="comments">
+          <img  src="{% static '/images/dummy.jpg'%}">
+          <h3>
+            <b>Naman</b>
             <p>30<sup>th</sup>Oct 2020</p>
-        </div>
-        <p>excellent working  </p>
-        <hr>
+          </h3>
+          <p>excellent working  </p>
+          <hr style="border: 1px solid blanchedalmond;">
+      </div>
 
-        <div class="comments">
-        <img  src="{% static '/images/dummy.jpg'%}">
-            <h3><b>Tarun</b></h3>
-            <p>30<sup>th</sup>Oct 2020</p>
-        </div>
-        <p>Wow!! best product. </p>
-        <hr>
-
-        <div class="comments">
-        <img  src="{% static '/images/dummy.jpg'%}">
-            <h3><b>Amir</b></h3>
-            <p>30<sup>th</sup>Oct 2020</p>
-        </div>
-        <p>nice features </p>
-        <hr>
     </div>
-
-        <div class="usercomment">
-            <form action="" method="get">
-  <label for="comment">Leave your comment</label><br>
-  <input  type="text" >
-                <input type="button">
-<input style="padding: 5px;" type="submit" value="Submit">
-</form>
-        </div>
-
-
-    </main>
+  </div>
 {% endblock %}
