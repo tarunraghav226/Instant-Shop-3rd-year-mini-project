@@ -35,4 +35,6 @@ urlpatterns = [
     path('uploaded-products/', view.UploadedProductsView.as_view(), name='uploaded-products'),
     path('delete/<int:id>', view.DeleteProductView.as_view(), name='delete'),
     path('edit/<int:id>', view.EditProductView.as_view(), name='edit'),
-]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    path('product-view/', TemplateView.as_view(template_name='product-view.html'), name='product-view'),
+
+              ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
