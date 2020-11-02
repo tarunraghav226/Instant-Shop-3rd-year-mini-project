@@ -39,7 +39,7 @@ class Products(models.Model):
 
 
 class Comment(models.Model):
-    comment_done_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment_done_by = models.ForeignKey(CustomerUser, on_delete=models.CASCADE)
     date_of_comment = models.DateField(default=datetime.datetime.today)
     comment = models.TextField()
 
