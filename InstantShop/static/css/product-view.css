@@ -1,57 +1,108 @@
-main{
+.main{
     background-color: rgb(43, 22, 22);
-}
-.productImage img{
-    height: 450px;
-    width: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px;
 }
 
-.features form{
-    margin-top: 15px;
-    style:"color: white;"
+.product-data{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 80%;
+}
+
+.product-image{
+    margin-right: 30px;
+}
+
+.product-image img{
+    height: 450px;
+    width: max-content;
+    border-radius: 4px;
+}
+
+.product-des > span:first-child{
+    color: navajowhite;
+    font-size: 30px;
+    font-weight: 300;
+    display: block;
+}
+
+.product-des > span:nth-child(2){
+    color: #c4dce8;
+    font-size: 20px;
+    display: block;
+    margin: 10px 0px;
+}
+
+.product-des > h3{
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    margin: 10px 0px;
+}
+
+.product-des > span:nth-child(4){
+    color: white;
+    display: block;
+    margin: 10px 0px;
+}
+
+.product-comments{
+    width: 70%;
+}
+
+.product-comments > h1{
+    color: blanchedalmond;
+    font-size: 30px;
+    font-weight: 500;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .comments{
-
-    display: flex;
-}
-.comments img{
-    margin-top: 50px;
-    margin-left:260px;
-    height:40px;width: 40px;
-    border-radius: 50%;
-}
-
-.comments h3{
-    margin-top: 50px;
-    margin-left: 10px;
-        color: blanchedalmond;
-
-}
-
-.comments p{
-    margin-top: 50px;
-        color: blanchedalmond;
-
-}
-.commentsection h1{
-    margin-left: 220px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 25px;
+    margin:10px 0px;
     color: blanchedalmond;
 }
 
-.commentsection p{
-    margin-left: 400px;
-    color: wheat;
+.comments > img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline;
 }
 
-.usercomment{
-    margin-left: 250px;
-    margin-top: 150px;
-    color: ghostwhite;
-
+.comments > h3{
+    display: inline-flex;
+    flex-direction: column;
+    width: max-content;
+    text-align: left;
+    margin-bottom: 10px;
 }
 
+.comments h3 > b{
+    font-size: 30px;
+}
 
+.comments h3 > p{
+    font-size: 10px;
+}
+
+@media only screen and (max-width:550px){
+    .product-data{
+        flex-direction: column;
+    }
+
+    .product-des{
+        margin-top: 20px;
+    }
+
+    .product-image{margin: 0px;}
+    .product-image > img{
+        height: 30vh;
+    }
+}
