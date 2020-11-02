@@ -48,7 +48,7 @@ class Comment(models.Model):
 
 
 class ProductComments(models.Model):
-    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    product = models.OneToOneField(Products, on_delete=models.CASCADE)
     comment = models.ManyToManyField(Comment)
 
     def __str__(self):
