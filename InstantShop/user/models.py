@@ -36,3 +36,20 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name+" "+self.user.username
+
+
+class Comment(models.Model):
+    comment_done_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_of_comment = models.DateField(default=datetime.datetime.today)
+    comment = models.TextField()
+
+    def __str__(self):
+        return str(self.id)
+
+
+class ProductComments(models.Model):
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    comment = models.ManyToManyField(Comment)
+
+    def __str__(self):
+        return str(self.id)
