@@ -4,7 +4,7 @@ from django.views import View
 from django.urls import reverse
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import CustomerUser, Products
+from .models import CustomerUser, Products, ProductComments
 from django.contrib import messages
 
 # Create your views here.
@@ -226,10 +226,18 @@ class ProductView(View):
         product = Products.objects.filter(id=id)
         
         if len(product) > 0:
+
             context ={
-                'product' : product[0]
+                'product' : product[0],
             }
 
+            comments = ProductComments.objects.filter(product=product[0])
+
+            if len(comments) > 0:
+                print(comments[0].comment.all())
+                comments = comments[0].comment.all()
+                context['comments'] = comments
+ 
             return render(request, 'product-view.html', context)
         else:
             messages.error(request, 'No Product found.')

@@ -29,16 +29,28 @@
       <h1>Comments</h1>
       <hr style="border: 1px solid blanchedalmond;">
       
-      <div class="comments">
-          <img  src="{% static '/images/dummy.jpg'%}">
-          <h3>
-            <b>Naman</b>
-            <p>30<sup>th</sup>Oct 2020</p>
-          </h3>
-          <p>excellent working  </p>
-          <hr style="border: 1px solid blanchedalmond;">
-      </div>
+      <form action="#" method="GET">
+        <label for="comment">Add your comment : </label>
+        <textarea name="comment" id="comment" cols="30" rows="4" class="form-control" placeholder="Your comment here."></textarea>
+        <button type="submit">Add</button>
+      </form>
+      <hr style="border: 1px solid blanchedalmond;">
 
+      {% if comments %}
+        {% for comment in comments %}
+          <div class="comments">
+              <img  src="{{ comment.comment_done_by.photo.url }}">
+              <h3>
+                <b>{{ comment.comment_done_by.user.first_name }}</b>
+                <p>{{ comment.date_of_comment }}</p>
+              </h3>
+              <p> {{ comment.comment }}  </p>
+              <hr style="border: 1px solid blanchedalmond;">
+          </div>
+        {% endfor %}
+      {% else %}
+          <h1 style="font-size: larger;font-weight: bold; color: blanchedalmond;">No comments on this product so far.</h1>
+      {% endif %}
     </div>
   </div>
 {% endblock %}
