@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import LoginForm, SignUpForm, UploadProductForm, UpdateProductForm, ProfilePhotoForm
+from .forms import LoginForm, SignUpForm, UploadProductForm, UpdateProductForm, ProfilePhotoForm, CommentForm
 from django.views import View
 from django.urls import reverse
 from django.contrib.auth import logout
@@ -244,3 +244,16 @@ class ProductView(View):
             return redirect(reverse('shop'))
 
 
+class AddCommentView(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+
+        id = kwargs['id']
+
+        comment_form = CommentForm({
+            'comment' : request.GET['comment']
+        })
+
+        if comment_form.is_valid():
+            comment_form.save(request = request, product_id = id)
+
+        return redirect('/product-view/{0}'.format(id))
