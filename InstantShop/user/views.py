@@ -6,6 +6,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import CustomerUser, Products, ProductComments, Cart
 from django.contrib import messages
+from modules.search import search
 
 # Create your views here.
 
@@ -219,6 +220,21 @@ class ShowProductView(View):
 
         return render(request, 'shop.html', context)
 
+    def post(self, request):
+        search_text = request.POST['search-text']
+        
+        searched_list = search(search_text)
+
+        context = {}
+
+        if len(searched_list) == 0:
+            messages.error(request, 'No product found.')
+        else:
+            context = {
+                'products' : searched_list
+            }
+        
+        return render(request, 'shop.html', context)
 
 class ProductView(View):
     def get(self, request, **kwargs):

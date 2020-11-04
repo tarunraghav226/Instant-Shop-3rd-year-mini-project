@@ -13,11 +13,15 @@
 
         <!--Search box start-->
         <div class="search">
-            <form action="#" method="get" id="search-form">
+            <form action="{% url 'shop' %}" method="POST" id="search-form">
+                {% csrf_token %}
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Search" name="search-text" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control" placeholder="Search" name="search-text" aria-label="Recipient's username" aria-describedby="basic-addon2" required>
                     <div class="input-group-append">
-                      <input type="image" src="{% static 'images/favicon.png' %}" alt="search-icon" class="input-group-text" id="basic-addon2">
+                      <!-- <input type="image" src="{% static 'images/favicon.png' %}" alt="search-icon" class="input-group-text" id="basic-addon2">-->
+                      <button type="submit" class="input-group-text" id="basic-addon2">
+                        <i class="fa fa-search" ></i>
+                      </button>
                     </div>
                   </div>
             </form>
