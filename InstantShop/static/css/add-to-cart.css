@@ -1,0 +1,41 @@
+
+        main {
+            background-color: rgb(43, 22, 22);
+        }
+        h1{
+            margin-left: 50%;
+            margin-top: 40px;
+            color:navajowhite;
+        }
+        .main{
+            display: flex;
+        }
+        .main img{
+            width: 50px;
+            height: 50px;
+            margin-left: 300px;
+            margin-top:50px;
+        }
+        .main h2{
+            margin-left:50px;
+            margin-top:50px;
+            color:navajowhite;
+        }
+        .main p{
+            margin-left:-255px;
+            margin-top:100px;
+            color:navajowhite;
+        }
+        .main h3{
+            margin-left:-345px;
+            margin-top:200px;
+            color:navajowhite;
+        }
+        .main button{
+            margin-left:150px;
+            margin-top:200px;
+            width: 70px;
+            height: 30px;
+            background-color: burlywood;
+            outline: none;
+        }
