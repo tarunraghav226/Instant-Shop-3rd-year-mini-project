@@ -55,7 +55,7 @@
                             <p id="description">{{ product.description }}</p>
                             <div class="links">
                                 <a href="{% url 'product-view' product.id %}" id="view">View</a>
-                                <a href="#" id="add-to-cart">Add to cart</a>
+                                <a href="{% url 'add-to-cart' product.id %}" id="add-to-cart">Add to cart</a>
                             </div>
                         </div>
                     </div>

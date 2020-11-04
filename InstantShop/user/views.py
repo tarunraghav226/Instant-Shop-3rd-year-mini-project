@@ -4,7 +4,7 @@ from django.views import View
 from django.urls import reverse
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import CustomerUser, Products, ProductComments
+from .models import CustomerUser, Products, ProductComments, Cart
 from django.contrib import messages
 
 # Create your views here.
@@ -257,3 +257,32 @@ class AddCommentView(LoginRequiredMixin, View):
             comment_form.save(request = request, product_id = id)
 
         return redirect('/product-view/{0}'.format(id))
+
+
+class AddProductToCartView(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+
+        product_id = kwargs['id']
+
+        cust_user = CustomerUser.objects.filter(user = request.user)
+        product = Products.objects.filter(id = product_id)
+
+        if len(product) > 0:
+            product = product[0]
+        else:
+            messages.error(request, 'Product not found.')
+            return redirect(reverse('shop'))
+
+        if len(cust_user) > 0:
+            cust_user = cust_user[0]
+        else:
+            messages.error(request, 'Not a valid user.')
+            return redirect(reverse('shop')) 
+
+        Cart.objects.create(
+            user_carted = cust_user,
+            product_carted = product
+        )
+
+        messages.error(request, 'Product added to cart.')
+        return redirect(reverse('shop'))

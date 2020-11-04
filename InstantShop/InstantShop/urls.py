@@ -37,4 +37,5 @@ urlpatterns = [
     path('edit/<int:id>', view.EditProductView.as_view(), name='edit'),
     path('product-view/<int:id>', view.ProductView.as_view(), name='product-view'),
     path('add-comment/<int:id>', view.AddCommentView.as_view(), name='add-comment'),
+    path('add-to-cart/<int:id>', view.AddProductToCartView.as_view(), name='add-to-cart')
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
