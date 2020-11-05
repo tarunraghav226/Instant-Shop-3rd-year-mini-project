@@ -20,8 +20,10 @@
                     <img src ="{{ item.product_carted.img1.url }}">
                     <div class="item-details">
                         <h2>
-                            {{ item.product_carted.name }}
-                            <i class="fa fa-trash"></i>
+                            {{ item.product_carted.name }}                        
+                            <a href="{% url 'delete-cart-item' item.id %}">
+                                <i class="fa fa-trash"></i>
+                            </a>
                         </h2>
                         <div class="item-pri-btn">
                             <h3>&#8377; {{ item.product_carted.price }}</h3>
@@ -37,6 +39,3 @@
         {% endif %}
     </main>
 {% endblock %}
-<a href="{% url 'delete-cart-item' item.id %}">
-    <i class="fa fa-trash"></i>
-</a>
