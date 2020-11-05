@@ -8,11 +8,13 @@ def search(search_text):
     all_products = set()
 
     for text in search_text:
-        all_products.add(Products.objects.filter(
+        searched_product = Products.objects.filter(
             Q(name__icontains = text) |
             Q(description__icontains = text) |
             Q(price__icontains = text) |
             Q(features__icontains = text) |
             Q(months_of_product_used__icontains = text)
-        )[0])
+        )
+        if len(searched_product) > 0:
+            all_products.add(searched_product[0])
     return all_products
