@@ -302,3 +302,19 @@ class AddProductToCartView(LoginRequiredMixin, View):
 
         messages.error(request, 'Product added to cart.')
         return redirect(reverse('shop'))
+
+
+class ShowCartView(LoginRequiredMixin, View):
+    def get(self, request):
+        cart = Cart.objects.filter(
+            user_carted = CustomerUser.objects.get(
+                user = request.user
+            )
+        )
+
+        context = {}
+        if len(cart) > 0:
+            context = {
+                'items' : cart
+            }    
+        return render(request, 'cart.html', context)
