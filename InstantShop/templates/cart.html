@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <title>InstantShop-Cart</title>
+    <link rel="stylesheet" href="{% static '../static/css/cart.css' %}">
+{% endblock %}
+
+{% block main %}
+    <main>
+
+        <h1>
+            Your Cart <i class="fa fa-shopping-cart"></i>
+            <hr style="border: 1px solid white;">
+        </h1>
+
+        {% if items %}
+            {% for item in items %}
+                <div class="cart-item">
+                    <img src ="{{ item.product_carted.img1.url }}">
+                    <div class="item-details">
+                        <h2>
+                            {{ item.product_carted.name }}                        
+                            <a href="{% url 'delete-cart-item' item.id %}">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </h2>
+                        <div class="item-pri-btn">
+                            <h3>&#8377; {{ item.product_carted.price }}</h3>
+                            <a href="#">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h1 style="color: blanchedalmond;font-size: larger;font-weight: 600;">
+                No items in cart.
+            </h1>
+        {% endif %}
+    </main>
+{% endblock %}

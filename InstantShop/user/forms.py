@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login
 from django.core.exceptions import ValidationError
 import datetime
-from .models import CustomerUser, Products
+from .models import CustomerUser, Products, Comment, ProductComments
 from django.core.mail import send_mail
 from modules.mail import mail
 from django.contrib import messages
@@ -330,4 +330,46 @@ class ProfilePhotoForm(forms.Form):
             c_user.save()
             return True
         else:
+            return False
+
+
+class CommentForm(forms.Form):
+    comment = forms.CharField(widget=forms.Textarea)
+
+    def clean_comment(self):
+        return self.cleaned_data['comment']
+
+    def get_customer_user(self, request):
+        user = CustomerUser.objects.filter(user = request.user)
+
+        return user[0] if len(user) > 0 else None
+
+    def get_product(self, product_id):
+        product = Products.objects.filter(id = product_id)
+
+        return product[0] if len(product) > 0 else None
+
+    def save(self, request, product_id):
+
+        user = self.get_customer_user(request)
+        product = self.get_product(product_id)
+
+        if user and product:
+            comment = Comment(
+                comment_done_by = user,
+                comment = self.clean_comment()
+            )
+
+            product_comment = ProductComments.objects.get_or_create(
+                product = product
+            )[0]
+
+            comment.save()
+
+            product_comment.save()
+            product_comment.comment.add(comment)
+
+            return True
+        else:
+            messages.error(self.request, "Something went wrong.")
             return False

@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from .forms import LoginForm, SignUpForm, UploadProductForm, UpdateProductForm, ProfilePhotoForm
+from .forms import LoginForm, SignUpForm, UploadProductForm, UpdateProductForm, ProfilePhotoForm, CommentForm
 from django.views import View
 from django.urls import reverse
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import CustomerUser, Products, ProductComments
+from .models import CustomerUser, Products, ProductComments, Cart
 from django.contrib import messages
+from modules.search import search
 
 # Create your views here.
 
@@ -219,6 +220,21 @@ class ShowProductView(View):
 
         return render(request, 'shop.html', context)
 
+    def post(self, request):
+        search_text = request.POST['search-text']
+        
+        searched_list = search(search_text)
+
+        context = {}
+
+        if len(searched_list) == 0:
+            messages.error(request, 'No product found.')
+        else:
+            context = {
+                'products' : searched_list
+            }
+        
+        return render(request, 'shop.html', context)
 
 class ProductView(View):
     def get(self, request, **kwargs):
@@ -244,3 +260,80 @@ class ProductView(View):
             return redirect(reverse('shop'))
 
 
+class AddCommentView(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+
+        id = kwargs['id']
+
+        comment_form = CommentForm({
+            'comment' : request.GET['comment']
+        })
+
+        if comment_form.is_valid():
+            comment_form.save(request = request, product_id = id)
+
+        return redirect('/product-view/{0}'.format(id))
+
+
+class AddProductToCartView(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+
+        product_id = kwargs['id']
+
+        cust_user = CustomerUser.objects.filter(user = request.user)
+        product = Products.objects.filter(id = product_id)
+
+        if len(product) > 0:
+            product = product[0]
+        else:
+            messages.error(request, 'Product not found.')
+            return redirect(reverse('shop'))
+
+        if len(cust_user) > 0:
+            cust_user = cust_user[0]
+        else:
+            messages.error(request, 'Not a valid user.')
+            return redirect(reverse('shop')) 
+
+        Cart.objects.create(
+            user_carted = cust_user,
+            product_carted = product
+        )
+
+        messages.error(request, 'Product added to cart.')
+        return redirect(reverse('shop'))
+
+
+class ShowCartView(LoginRequiredMixin, View):
+    def get(self, request):
+        cart = Cart.objects.filter(
+            user_carted = CustomerUser.objects.get(
+                user = request.user
+            )
+        )
+
+        context = {}
+        if len(cart) > 0:
+            context = {
+                'items' : cart
+            }    
+        return render(request, 'cart.html', context)
+
+
+class DeleteCartItemView(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+        cart_item_id = kwargs['id']
+        cart_item = Cart.objects.filter(id=cart_item_id)
+
+        if len(cart_item) > 0:
+            cart_item = cart_item[0]
+
+            if cart_item.user_carted.user == request.user:
+                messages.info(request, "Cart item deleted successfully.")
+                cart_item.delete()
+            else:
+                messages.error(request, "You are not authorised to delete this item.")
+        else:
+            messages.error(request, "Wrong request.")
+
+        return redirect(reverse('show-cart'))

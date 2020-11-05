@@ -36,6 +36,8 @@ urlpatterns = [
     path('delete/<int:id>', view.DeleteProductView.as_view(), name='delete'),
     path('edit/<int:id>', view.EditProductView.as_view(), name='edit'),
     path('product-view/<int:id>', view.ProductView.as_view(), name='product-view'),
-    path('add-to-cart/', TemplateView.as_view(template_name='add-to-cart.html'), name='add-to-cart'),
-
-              ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    path('add-comment/<int:id>', view.AddCommentView.as_view(), name='add-comment'),
+    path('add-to-cart/<int:id>', view.AddProductToCartView.as_view(), name='add-to-cart'),
+    path('show-cart/', view.ShowCartView.as_view(), name='show-cart'),
+    path('delete-cart-item/<int:id>', view.DeleteCartItemView.as_view(), name='delete-cart-item'),
+]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

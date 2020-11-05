@@ -53,3 +53,11 @@ class ProductComments(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class Cart(models.Model):
+    user_carted = models.ForeignKey(CustomerUser, on_delete=models.CASCADE)
+    product_carted = models.ForeignKey(Products, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user_carted.user.username +" carted "+self.product_carted.name
