@@ -318,3 +318,22 @@ class ShowCartView(LoginRequiredMixin, View):
                 'items' : cart
             }    
         return render(request, 'cart.html', context)
+
+
+class DeleteCartItemView(LoginRequiredMixin, View):
+    def get(self, request, **kwargs):
+        cart_item_id = kwargs['id']
+        cart_item = Cart.objects.filter(id=cart_item_id)
+
+        if len(cart_item) > 0:
+            cart_item = cart_item[0]
+
+            if cart_item.user_carted.user == request.user:
+                messages.info(request, "Cart item deleted successfully.")
+                cart_item.delete()
+            else:
+                messages.error(request, "You are not authorised to delete this item.")
+        else:
+            messages.error(request, "Wrong request.")
+
+        return redirect(reverse('show-cart'))
