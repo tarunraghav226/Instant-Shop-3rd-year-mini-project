@@ -27,7 +27,11 @@
                         </h2>
                         <div class="item-pri-btn">
                             <h3>&#8377; {{ item.product_carted.price }}</h3>
-                            <a href="#">Buy Now</a>
+                            {% if not item.product_carted.selled %}
+                                <a href="{% url 'buy-product' item.product_carted.id %}">Buy Now</a>
+                            {% else %}
+                                <a > Product Selled </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
