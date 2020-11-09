@@ -89,3 +89,12 @@ class ChatRoom(models.Model):
             self.user1.user.first_name,
             self.user2.user.first_name
         )
+
+
+class PurchasedProducts(models.Model):
+    buyer = models.ForeignKey(CustomerUser, on_delete=models.CASCADE)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE)
+    date_of_order = models.DateTimeField(default=datetime.datetime.now)
+
+    def __str__(self):
+        return str(self.buyer.user.first_name) +" purchased "+ str(self.product.name)
