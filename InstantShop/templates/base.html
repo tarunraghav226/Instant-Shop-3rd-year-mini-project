@@ -35,6 +35,7 @@
             <li><i class="fa fa-shopping-bag" aria-hidden="true"></i><a href="{% url 'shop' %}"> Shop</a></li>
             <li><i aria-hidden="true" class="fa fa-users"></i><a href="{% url 'about_us' %}"> About Us</a></li>
             {% if user.is_authenticated %}
+              <li><i class="fa fa-wechat" aria-hidden="true"></i><a href="{% url 'chat-room' %}"> Chat</a></li>
               <li><i class="fa fa-shopping-cart" aria-hidden="true"></i><a href="{% url 'show-cart' %}"> Cart</a></li>
               <li><i class="fa fa-dashboard" aria-hidden="true"></i><a href="{% url 'profile' %}" > Profile</a></li>
               <li><i class="fa fa-sign-out" aria-hidden="true"></i><a href="{% url 'logout' %}" > Logout</a></li>
