@@ -79,6 +79,10 @@ span{
     height: 100%;
 }
 
+.messages{
+    padding-top: 20px;
+    background: rgb(43, 22, 22);
+}
 
 @media only screen and (max-width:635px){
     nav ul li{

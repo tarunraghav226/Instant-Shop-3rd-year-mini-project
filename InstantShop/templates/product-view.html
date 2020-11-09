@@ -21,7 +21,11 @@
         <span>{{ product.features }}</span>
         <div class="flex">
           <span style="color:navajowhite;" class="title-font font-medium text-2xl text-gray-900">&#8377; {{ product.price }}</span>
-          <button class="flex ml-auto text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded">Buy Now</button>
+          {% if not product.selled %}
+            <a onsubmit="confirm('Are you sure to buy this product?');" href="{% url 'buy-product' product.id %}" class="flex ml-auto text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded">Buy Now</a>
+          {% else %}
+            <a class="flex ml-auto text-white bg-orange-500 border-0 py-2 px-6 focus:outline-none hover:bg-orange-600 rounded">Product Selled</a>
+          {% endif %}
         </div>
         <form action="{% url 'chat-room' %}" method="POST">
           {% csrf_token %}

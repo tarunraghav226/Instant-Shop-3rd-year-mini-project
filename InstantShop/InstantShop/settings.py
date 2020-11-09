@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = '7&!@wovf4jqqez^g5*yno=^3^8_tq96wzkg89g$wffhmiwokpt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['instantshop.pythonanywhere.com','127.0.0.1']
+ALLOWED_HOSTS = ['instantshop.pythonanywhere.com']
 
 
 # Application definition
