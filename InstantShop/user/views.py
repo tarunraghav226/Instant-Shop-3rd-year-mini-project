@@ -55,6 +55,8 @@ class RegisterView(View):
 
 
 class LogoutView(View, LoginRequiredMixin):
+    login_url='/index/'
+
     def get(self, request):
         logout(request)
         return redirect(reverse('index'))
@@ -74,6 +76,8 @@ class EmailVerificationView(View):
 
 
 class ProfileView(LoginRequiredMixin,View):
+    login_url='/index/'
+
     def get(self, request):
         context = {
             'dp' : CustomerUser.objects.get(user = request.user).photo
@@ -92,6 +96,8 @@ class ProfileView(LoginRequiredMixin,View):
         return redirect(reverse('profile'))
 
 class UploadProductView(LoginRequiredMixin,View):
+    login_url='/index/'
+
     def get(self, request):
         form = UploadProductForm()
         context = {            
@@ -114,6 +120,8 @@ class UploadProductView(LoginRequiredMixin,View):
             return render(request, 'product.html',context)
 
 class PreviousOrderDetailsView(LoginRequiredMixin, View):
+    login_url='/index/'
+
     def get(self, request):
         context={
             'dp' : CustomerUser.objects.get(user = request.user).photo
@@ -122,6 +130,8 @@ class PreviousOrderDetailsView(LoginRequiredMixin, View):
 
 
 class UploadedProductsView(LoginRequiredMixin, View):
+    login_url='/index/'
+
     def get(self, request):
         products = Products.objects.filter(user=request.user)
         context = {
@@ -134,6 +144,8 @@ class UploadedProductsView(LoginRequiredMixin, View):
         return redirect(reverse('uploaded-products'))
 
 class DeleteProductView(LoginRequiredMixin, View):
+    login_url='/index/'
+
     def get(self, request, **kwargs):
         products = Products.objects.filter(id = kwargs['id'])
 
@@ -150,6 +162,8 @@ class DeleteProductView(LoginRequiredMixin, View):
 
 
 class EditProductView(LoginRequiredMixin, View):
+    login_url='/index/'
+
     def get(self, request, **kwargs):
         products = Products.objects.filter(id = kwargs['id'])
 
@@ -262,6 +276,8 @@ class ProductView(View):
 
 
 class AddCommentView(LoginRequiredMixin, View):
+    login_url='/index/'
+
     def get(self, request, **kwargs):
 
         id = kwargs['id']
@@ -277,6 +293,8 @@ class AddCommentView(LoginRequiredMixin, View):
 
 
 class AddProductToCartView(LoginRequiredMixin, View):
+    login_url = '/index/'
+
     def get(self, request, **kwargs):
 
         product_id = kwargs['id']
@@ -306,6 +324,8 @@ class AddProductToCartView(LoginRequiredMixin, View):
 
 
 class ShowCartView(LoginRequiredMixin, View):
+    login_url = '/index/'
+
     def get(self, request):
         cart = Cart.objects.filter(
             user_carted = CustomerUser.objects.get(
@@ -322,6 +342,8 @@ class ShowCartView(LoginRequiredMixin, View):
 
 
 class DeleteCartItemView(LoginRequiredMixin, View):
+    login_url = '/index/'
+    
     def get(self, request, **kwargs):
         cart_item_id = kwargs['id']
         cart_item = Cart.objects.filter(id=cart_item_id)
@@ -341,6 +363,8 @@ class DeleteCartItemView(LoginRequiredMixin, View):
 
 
 class ChatRoomView(LoginRequiredMixin, View):
+    login_url = '/index/'
+
     def get(self, request):
         rooms = ChatRoom.objects.filter(
             Q(user1 = CustomerUser.objects.get(user = request.user)) |
@@ -379,6 +403,8 @@ class ChatRoomView(LoginRequiredMixin, View):
 
 
 class ChatView(LoginRequiredMixin, View):
+    login_url = '/index/'
+
     def get(self, request):
         room_id = request.GET['id']
 
