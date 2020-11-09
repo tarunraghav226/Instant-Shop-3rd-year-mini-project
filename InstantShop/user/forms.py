@@ -47,7 +47,10 @@ class SignUpForm(forms.Form):
     firstname = forms.CharField(max_length=20, label='FirstName')
     lastname = forms.CharField(max_length=20, label='LastName')
     username = forms.CharField(max_length=20, label='UserName')
-    address = forms.CharField(max_length=20, label='Address')
+    address = forms.CharField(label='Address', widget=forms.Textarea(attrs={
+        "rows":"1",
+        "cols":"20"
+    }))
     email = forms.CharField(max_length=70, label='Email', widget=forms.EmailInput)
     tel = forms.CharField(label='Mobile Number', widget=forms.TextInput(attrs={'pattern':'\d{10,12}','title':'Must have 10 digits.'}))
     dob = forms.DateField(label='Date Of Birth', widget=forms.DateInput(attrs={'id':'datepicker', 'type':'date'}))

@@ -23,7 +23,7 @@ class Products(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length = 40)
     description = models.TextField()
-    price = models.DecimalField(max_digits = 5, decimal_places = 2) 
+    price = models.DecimalField(max_digits = 100, decimal_places = 3) 
     product_uploaded_on_date = models.DateField()
     selled = models.BooleanField(default=False)
     features = models.TextField()
