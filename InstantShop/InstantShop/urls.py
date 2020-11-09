@@ -42,4 +42,5 @@ urlpatterns = [
     path('delete-cart-item/<int:id>', view.DeleteCartItemView.as_view(), name='delete-cart-item'),
     path('chat-room/', view.ChatRoomView.as_view(), name='chat-room'),
     path('chat/', view.ChatView.as_view(), name='chat'),
+    path('buy/<int:id>', view.BuyProductView.as_view(), name='buy-product')
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

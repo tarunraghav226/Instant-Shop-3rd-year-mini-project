@@ -4,7 +4,7 @@ from django.views import View
 from django.urls import reverse
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import CustomerUser, Products, ProductComments, Cart, ChatRoom, Chat
+from .models import CustomerUser, Products, ProductComments, Cart, ChatRoom, Chat, PurchasedProducts
 from django.contrib import messages
 from modules.search import search
 from django.db.models import Q
@@ -456,3 +456,26 @@ class ChatView(LoginRequiredMixin, View):
             return HttpResponse(status=200)
         else:
             return HttpResponse(status=400)
+
+
+class BuyProductView(LoginRequiredMixin, View):
+    login_url='/index/'
+
+    def get(self, request, **kwargs):
+        product_id = kwargs['id']
+
+        buyer = CustomerUser.objects.get(user = request.user)
+        products = Products.objects.filter(id=product_id,selled=False)
+
+        if len(products) > 0:
+            product = products[0]
+            PurchasedProducts.objects.create(
+                buyer = buyer,
+                product = product
+            )
+            product.selled = True
+            product.save()
+            messages.info(request, "Product purchased successfully.")
+        else:
+            messages.error(request, "Wrong product request.")
+        return redirect(reverse('shop'))
