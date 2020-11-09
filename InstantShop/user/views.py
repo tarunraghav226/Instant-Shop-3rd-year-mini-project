@@ -229,8 +229,13 @@ class ShowProductView(View):
     def get(self, request):
         products = Products.objects.all()
         
+        login_form = LoginForm()
+        signup_form = SignUpForm()
+
         context = {
             'products' : products,
+            'login_form':login_form,
+            'signup_form':signup_form
         } 
 
         return render(request, 'shop.html', context)
@@ -240,14 +245,15 @@ class ShowProductView(View):
         
         searched_list = search(search_text)
 
-        context = {}
+        context = {
+            'login_form':login_form,
+            'signup_form':signup_form
+        }
 
         if len(searched_list) == 0:
             messages.error(request, 'No product found.')
         else:
-            context = {
-                'products' : searched_list
-            }
+            context['products'] : searched_list
         
         return render(request, 'shop.html', context)
 
@@ -258,8 +264,13 @@ class ProductView(View):
         
         if len(product) > 0:
 
+            login_form = LoginForm()
+            signup_form = SignUpForm()
+
             context ={
                 'product' : product[0],
+                'login_form':login_form,
+                'signup_form':signup_form
             }
 
             comments = ProductComments.objects.filter(product=product[0])
