@@ -49,7 +49,8 @@ class SignUpForm(forms.Form):
     username = forms.CharField(max_length=20, label='UserName')
     address = forms.CharField(label='Address', widget=forms.Textarea(attrs={
         "rows":"1",
-        "cols":"20"
+        "cols":"20",
+        "class":"form-control"
     }))
     email = forms.CharField(max_length=70, label='Email', widget=forms.EmailInput)
     tel = forms.CharField(label='Mobile Number', widget=forms.TextInput(attrs={'pattern':'\d{10,12}','title':'Must have 10 digits.'}))
