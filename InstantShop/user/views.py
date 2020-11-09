@@ -123,10 +123,15 @@ class PreviousOrderDetailsView(LoginRequiredMixin, View):
     login_url='/index/'
 
     def get(self, request):
-        context={
-            'dp' : CustomerUser.objects.get(user = request.user).photo
+        orders = PurchasedProducts.objects.filter(
+            buyer = CustomerUser.objects.get(user = request.user)
+        )
+
+        context = {
+            'dp' : CustomerUser.objects.get(user = request.user).photo,
+            'orders' : orders
         }
-        return render(request, 'previous-orders.html')
+        return render(request, 'previous-orders.html', context)
 
 
 class UploadedProductsView(LoginRequiredMixin, View):
