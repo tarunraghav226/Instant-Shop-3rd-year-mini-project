@@ -4,9 +4,12 @@ from django.views import View
 from django.urls import reverse
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import CustomerUser, Products, ProductComments, Cart
+from .models import CustomerUser, Products, ProductComments, Cart, ChatRoom, Chat
 from django.contrib import messages
 from modules.search import search
+from django.db.models import Q
+from django.http import JsonResponse, HttpResponse
+from django.core import serializers
 
 # Create your views here.
 
@@ -100,7 +103,6 @@ class UploadProductView(LoginRequiredMixin,View):
 
     def post(self, request):
         form = UploadProductForm(request.POST, request.FILES)
-        print(request.POST)
         if form.is_valid():
             form.save(request)
             return redirect(reverse('upload-product'))
@@ -191,7 +193,6 @@ class EditProductView(LoginRequiredMixin, View):
             if product.user == request.user:
                 form = UpdateProductForm(request.POST, request.FILES)
                 if form.is_valid():
-                    print(request.POST)
                     if form.save(kwargs['id']):
                         messages.error(request, 'Product updated successfully.')
                     else:
@@ -337,3 +338,84 @@ class DeleteCartItemView(LoginRequiredMixin, View):
             messages.error(request, "Wrong request.")
 
         return redirect(reverse('show-cart'))
+
+
+class ChatRoomView(LoginRequiredMixin, View):
+    def get(self, request):
+        rooms = ChatRoom.objects.filter(
+            Q(user1 = CustomerUser.objects.get(user = request.user)) |
+            Q(user2 = CustomerUser.objects.get(user = request.user))
+        )
+
+        context = {
+            'rooms' : rooms
+        }
+
+        return render(request, 'chat.html', context)
+
+    def post(self, request):
+        user2 = request.POST['id']
+        rooms = ChatRoom.objects.filter(
+            Q(user1 = CustomerUser.objects.get(user = request.user),
+            user2 = CustomerUser.objects.get(user = user2)) |
+            Q(user1 = CustomerUser.objects.get(user = user2),
+            user2 = CustomerUser.objects.get(user = request.user))
+        )
+
+        room = None
+        if len(rooms) > 0:
+            room = rooms[0]
+        else:
+            room = ChatRoom.objects.create(
+                user1 = CustomerUser.objects.get(user = request.user),
+                user2 = CustomerUser.objects.get(user = user2)
+            )
+    
+        context = {
+            'room_id':room.id,
+        }
+
+        return redirect(reverse('chat-room'))
+
+
+class ChatView(LoginRequiredMixin, View):
+    def get(self, request):
+        room_id = request.GET['id']
+
+        rooms = ChatRoom.objects.filter(id = room_id)
+
+        if len(rooms) > 0:
+            room = rooms[0]
+            chatsQuerySet = room.chat.all()
+            chats = []
+            for chat in chatsQuerySet:
+                tempChat ={
+                    'date':chat.date_of_chat,
+                    'send_by':chat.send_by.user.id,
+                    'chat':chat.chat
+                }
+                chats.append(tempChat)
+            resData = {
+                'chats' : chats
+            }
+
+            return JsonResponse(resData)
+        else:
+            messages.error('No room found.')
+            return redirect(reverse('/chat/'))
+    
+    def post(self, request):
+        room_id = request.POST['id']
+
+        rooms = ChatRoom.objects.filter(id = room_id)
+
+        if len(rooms) > 0:
+            room = rooms[0]
+            chat = Chat.objects.create(
+                send_by = CustomerUser.objects.get(user = request.user),
+                chat = request.POST['chat']
+            )
+            room.chat.add(chat)
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=400)
