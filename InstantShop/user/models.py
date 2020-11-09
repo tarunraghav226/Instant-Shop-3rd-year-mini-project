@@ -61,3 +61,31 @@ class Cart(models.Model):
 
     def __str__(self):
         return self.user_carted.user.username +" carted "+self.product_carted.name
+
+
+class Chat(models.Model):
+    date_of_chat = models.DateTimeField(default=datetime.datetime.now)
+    send_by = models.ForeignKey(CustomerUser, on_delete=models.CASCADE)
+    chat = models.TextField()
+
+    def __str__(self):
+        return str(self.id)
+
+
+class ChatRoom(models.Model):
+    user1 = models.ForeignKey(CustomerUser, 
+                related_name='user1', 
+                on_delete=models.CASCADE
+            )
+    user2 = models.ForeignKey(CustomerUser, 
+                related_name='user2', 
+                on_delete=models.CASCADE
+            )
+
+    chat = models.ManyToManyField(Chat)
+
+    def __str__(self):
+        return "Chat room for {0} and {1}".format(
+            self.user1.user.first_name,
+            self.user2.user.first_name
+        )

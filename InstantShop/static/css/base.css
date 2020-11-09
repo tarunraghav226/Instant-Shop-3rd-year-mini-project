@@ -80,7 +80,7 @@ span{
 }
 
 
-@media only screen and (max-width:560px){
+@media only screen and (max-width:635px){
     nav ul li{
         clear: both;
         text-align: center;
