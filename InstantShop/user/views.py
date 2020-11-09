@@ -79,8 +79,22 @@ class ProfileView(LoginRequiredMixin,View):
     login_url='/index/'
 
     def get(self, request):
+
+        total_users = CustomerUser.objects.all().count()
+        total_products = Products.objects.all().count()
+        upload_by_user = Products.objects.filter(
+            user=request.user
+        ).count()
+        total_purchased = PurchasedProducts.objects.filter(
+            buyer = CustomerUser.objects.get(user=request.user)
+        ).count()
+        print(total_purchased)
         context = {
-            'dp' : CustomerUser.objects.get(user = request.user).photo
+            'dp' : CustomerUser.objects.get(user = request.user).photo,
+            'total_users' : total_users,
+            'total_products' : total_products,
+            'upload_by_user' : upload_by_user,
+            'total_purchased' : total_purchased
         }
         return render(request, 'profile.html', context)
     
