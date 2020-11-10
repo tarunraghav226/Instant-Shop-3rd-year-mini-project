@@ -501,3 +501,16 @@ class BuyProductView(LoginRequiredMixin, View):
         else:
             messages.error(request, "Wrong product request.")
         return redirect(reverse('shop'))
+
+
+class AboutUsView(View):
+    def get(self, request):
+        login_form = LoginForm()
+        signup_form = SignUpForm()
+        
+        context = {
+            'login_form':login_form,
+            'signup_form':signup_form
+        }
+
+        return render(request, 'about-us.html', context)
