@@ -143,7 +143,7 @@ class UploadProductForm(forms.Form):
             'label':'Description'}
             ))
 
-    price = forms.DecimalField(max_digits = 5, decimal_places = 2, widget=forms.NumberInput(
+    price = forms.DecimalField(max_digits = 100, decimal_places = 2, widget=forms.NumberInput(
         attrs={'class':'form-control',
         'label':'Name',
         'min':'0'
