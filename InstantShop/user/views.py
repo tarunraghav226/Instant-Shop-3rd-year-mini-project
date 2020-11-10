@@ -275,7 +275,7 @@ class ShowProductView(View):
         if len(searched_list) == 0:
             messages.error(request, 'No product found.')
         else:
-            context['products'] : searched_list
+            context['products'] = searched_list
         
         return render(request, 'shop.html', context)
 
