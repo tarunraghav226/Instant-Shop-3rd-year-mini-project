@@ -35,6 +35,7 @@ main{
     border-radius: 5px;
     clear: both;
     max-width: 40%;
+    word-break: break-word;
 }
 
 .right{
@@ -46,4 +47,5 @@ main{
     padding: 5px;
     border-radius: 5px;
     max-width: 40%;
+    word-break: break-word;
 }
