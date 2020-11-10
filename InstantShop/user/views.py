@@ -264,6 +264,9 @@ class ShowProductView(View):
         
         searched_list = search(search_text)
 
+        login_form = LoginForm()
+        signup_form = SignUpForm()
+
         context = {
             'login_form':login_form,
             'signup_form':signup_form
