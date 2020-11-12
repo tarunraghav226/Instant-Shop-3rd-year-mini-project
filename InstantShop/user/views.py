@@ -15,6 +15,11 @@ from django.core import serializers
 
 
 class LoginView(View):
+    """
+        This view handles two request methods.
+        GET method returns login and signup form if user is authenticated.
+        POST method authenticates and log-in the user if authenticated.
+    """
 
     def get(self, request):
         login_form = LoginForm()
@@ -37,7 +42,12 @@ class LoginView(View):
         else:
             return redirect(reverse('index'))
 
+
 class RegisterView(View):
+    """
+        This view handles only one request method.
+        POST method registers a user if details are valid.
+    """
     def post(self, request):
         if not request.user.is_authenticated:
             signup_form = SignUpForm(request.POST)
@@ -55,6 +65,12 @@ class RegisterView(View):
 
 
 class LogoutView(View, LoginRequiredMixin):
+    """
+        This view only handles one request method.
+        GET method logs out the logged in user.
+    """
+
+
     login_url='/index/'
 
     def get(self, request):
@@ -63,6 +79,11 @@ class LogoutView(View, LoginRequiredMixin):
 
 
 class EmailVerificationView(View):
+    """
+        This view only handles one request method.
+        GET method verifies the user email id.
+    """
+
     def get(self, request, **kwargs):
         token = kwargs['token']
         user = CustomerUser.objects.filter(token = token).first()
@@ -76,6 +97,12 @@ class EmailVerificationView(View):
 
 
 class ProfileView(LoginRequiredMixin,View):
+    """
+        This view only handles two request method.
+        GET method renders the profile page with all the required details.
+        POST method updates the user profile image.
+    """
+
     login_url='/index/'
 
     def get(self, request):
@@ -88,7 +115,7 @@ class ProfileView(LoginRequiredMixin,View):
         total_purchased = PurchasedProducts.objects.filter(
             buyer = CustomerUser.objects.get(user=request.user)
         ).count()
-        print(total_purchased)
+
         context = {
             'dp' : CustomerUser.objects.get(user = request.user).photo,
             'total_users' : total_users,
@@ -109,7 +136,14 @@ class ProfileView(LoginRequiredMixin,View):
             messages.error(request, "Either you didn't uploaded a photo or photo must not exceed 700kb size.")
         return redirect(reverse('profile'))
 
+
 class UploadProductView(LoginRequiredMixin,View):
+    """
+        This view only handles two request method.
+        GET method gives the form to upload new products.
+        POST method validates the form and adds new product in database.
+    """
+
     login_url='/index/'
 
     def get(self, request):
@@ -133,7 +167,13 @@ class UploadProductView(LoginRequiredMixin,View):
             }
             return render(request, 'product.html',context)
 
+
 class PreviousOrderDetailsView(LoginRequiredMixin, View):
+    """
+        This view only handles one request method.
+        GET method gives information about orders of user and renders the html file.
+    """
+
     login_url='/index/'
 
     def get(self, request):
@@ -149,6 +189,12 @@ class PreviousOrderDetailsView(LoginRequiredMixin, View):
 
 
 class UploadedProductsView(LoginRequiredMixin, View):
+    """
+        This view only handles two request method.
+        GET method gives a list of products uploaded by user and renders the html file.
+        POST method redirects to uploaded-products page.
+    """
+
     login_url='/index/'
 
     def get(self, request):
@@ -162,7 +208,13 @@ class UploadedProductsView(LoginRequiredMixin, View):
     def post(self, request):
         return redirect(reverse('uploaded-products'))
 
+
 class DeleteProductView(LoginRequiredMixin, View):
+    """
+        This view only handles one request method.
+        GET method deletes the product requested by user.
+    """
+
     login_url='/index/'
 
     def get(self, request, **kwargs):
@@ -181,6 +233,12 @@ class DeleteProductView(LoginRequiredMixin, View):
 
 
 class EditProductView(LoginRequiredMixin, View):
+    """
+        This view only handles two request method.
+        GET method finds the correct product details and generates a form and then renders the html file.
+        POST method validates the product form and updates the product details.
+    """
+
     login_url='/index/'
 
     def get(self, request, **kwargs):
@@ -243,7 +301,14 @@ class EditProductView(LoginRequiredMixin, View):
             messages.error(request, 'Wrong product request.')
         return redirect(reverse('uploaded-products'))
 
+
 class ShowProductView(View):
+    """
+        This view only handles two request method.
+        GET method generates login, signup form and list of all available products.
+        POST method searches a particular product according to the user query.
+    """
+
 
     def get(self, request):
         products = Products.objects.all()
@@ -279,7 +344,13 @@ class ShowProductView(View):
         
         return render(request, 'shop.html', context)
 
+
 class ProductView(View):
+    """
+        This view only handles one request method.
+        GET method searches details about a specific product.
+    """
+
     def get(self, request, **kwargs):
         id = kwargs['id']
         product = Products.objects.filter(id=id)
@@ -298,7 +369,6 @@ class ProductView(View):
             comments = ProductComments.objects.filter(product=product[0])
 
             if len(comments) > 0:
-                print(comments[0].comment.all())
                 comments = comments[0].comment.all()
                 context['comments'] = comments
  
@@ -309,6 +379,11 @@ class ProductView(View):
 
 
 class AddCommentView(LoginRequiredMixin, View):
+    """
+        This view only handles one request method.
+        GET method allows user to add a comment on product.
+    """
+
     login_url='/index/'
 
     def get(self, request, **kwargs):
@@ -326,6 +401,11 @@ class AddCommentView(LoginRequiredMixin, View):
 
 
 class AddProductToCartView(LoginRequiredMixin, View):
+    """
+        This view only handles one request method.
+        GET method adds a product to cart.
+    """
+
     login_url = '/index/'
 
     def get(self, request, **kwargs):
@@ -357,6 +437,11 @@ class AddProductToCartView(LoginRequiredMixin, View):
 
 
 class ShowCartView(LoginRequiredMixin, View):
+    """
+        This view only handles one request method.
+        GET method shows all products in user cart.
+    """
+
     login_url = '/index/'
 
     def get(self, request):
@@ -375,6 +460,11 @@ class ShowCartView(LoginRequiredMixin, View):
 
 
 class DeleteCartItemView(LoginRequiredMixin, View):
+    """
+        This view only handles one request method.
+        GET method deletes a product from cart.
+    """
+
     login_url = '/index/'
     
     def get(self, request, **kwargs):
@@ -396,6 +486,12 @@ class DeleteCartItemView(LoginRequiredMixin, View):
 
 
 class ChatRoomView(LoginRequiredMixin, View):
+    """
+        This view only handles one request method.
+        GET method gives a list of all ChatRoom of the logged in user.
+        POST method creates a ChatRoom if there none else redirects to chat-room.
+    """
+
     login_url = '/index/'
 
     def get(self, request):
@@ -436,6 +532,12 @@ class ChatRoomView(LoginRequiredMixin, View):
 
 
 class ChatView(LoginRequiredMixin, View):
+    """
+        This view only handles one request method.
+        GET method return JsonResponse of all the chats in a specific room.
+        POST method adds a new chat in a specific room.
+    """
+
     login_url = '/index/'
 
     def get(self, request):
@@ -481,6 +583,11 @@ class ChatView(LoginRequiredMixin, View):
 
 
 class BuyProductView(LoginRequiredMixin, View):
+    """
+        This view only handles one request method.
+        GET method adds a new product in users buyed product database.
+    """
+
     login_url='/index/'
 
     def get(self, request, **kwargs):
@@ -504,6 +611,11 @@ class BuyProductView(LoginRequiredMixin, View):
 
 
 class AboutUsView(View):
+    """
+        This view only handles one request method.
+        GET method generates login and signup form.
+    """
+
     def get(self, request):
         login_form = LoginForm()
         signup_form = SignUpForm()
