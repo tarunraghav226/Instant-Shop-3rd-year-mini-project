@@ -7,6 +7,7 @@ import datetime
 def user_directory(instance, filename):
     return 'user_{0}/{1}'.format(instance.user.username,filename)
 
+
 class CustomerUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     address = models.TextField()
@@ -18,6 +19,7 @@ class CustomerUser(models.Model):
 
     def __str__(self):
         return str(self.user.username)
+
 
 class Products(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

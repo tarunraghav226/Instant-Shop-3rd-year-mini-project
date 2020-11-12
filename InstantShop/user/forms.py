@@ -262,10 +262,8 @@ class UploadProductForm(forms.Form):
             img4 = self.cleaned_data['img4'],
         )
 
-        print(product.product_uploaded_on_date)
         product.save()
         return True
-
 
 
 class UpdateProductForm(UploadProductForm):
