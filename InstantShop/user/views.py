@@ -4,9 +4,12 @@ from django.views import View
 from django.urls import reverse
 from django.contrib.auth import logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import CustomerUser, Products, ProductComments, Cart
+from .models import CustomerUser, Products, ProductComments, Cart, ChatRoom, Chat, PurchasedProducts
 from django.contrib import messages
 from modules.search import search
+from django.db.models import Q
+from django.http import JsonResponse, HttpResponse
+from django.core import serializers
 
 # Create your views here.
 
@@ -52,6 +55,8 @@ class RegisterView(View):
 
 
 class LogoutView(View, LoginRequiredMixin):
+    login_url='/index/'
+
     def get(self, request):
         logout(request)
         return redirect(reverse('index'))
@@ -71,9 +76,25 @@ class EmailVerificationView(View):
 
 
 class ProfileView(LoginRequiredMixin,View):
+    login_url='/index/'
+
     def get(self, request):
+
+        total_users = CustomerUser.objects.all().count()
+        total_products = Products.objects.all().count()
+        upload_by_user = Products.objects.filter(
+            user=request.user
+        ).count()
+        total_purchased = PurchasedProducts.objects.filter(
+            buyer = CustomerUser.objects.get(user=request.user)
+        ).count()
+        print(total_purchased)
         context = {
-            'dp' : CustomerUser.objects.get(user = request.user).photo
+            'dp' : CustomerUser.objects.get(user = request.user).photo,
+            'total_users' : total_users,
+            'total_products' : total_products,
+            'upload_by_user' : upload_by_user,
+            'total_purchased' : total_purchased
         }
         return render(request, 'profile.html', context)
     
@@ -89,6 +110,8 @@ class ProfileView(LoginRequiredMixin,View):
         return redirect(reverse('profile'))
 
 class UploadProductView(LoginRequiredMixin,View):
+    login_url='/index/'
+
     def get(self, request):
         form = UploadProductForm()
         context = {            
@@ -100,7 +123,6 @@ class UploadProductView(LoginRequiredMixin,View):
 
     def post(self, request):
         form = UploadProductForm(request.POST, request.FILES)
-        print(request.POST)
         if form.is_valid():
             form.save(request)
             return redirect(reverse('upload-product'))
@@ -112,14 +134,23 @@ class UploadProductView(LoginRequiredMixin,View):
             return render(request, 'product.html',context)
 
 class PreviousOrderDetailsView(LoginRequiredMixin, View):
+    login_url='/index/'
+
     def get(self, request):
-        context={
-            'dp' : CustomerUser.objects.get(user = request.user).photo
+        orders = PurchasedProducts.objects.filter(
+            buyer = CustomerUser.objects.get(user = request.user)
+        )
+
+        context = {
+            'dp' : CustomerUser.objects.get(user = request.user).photo,
+            'orders' : orders
         }
-        return render(request, 'previous-orders.html')
+        return render(request, 'previous-orders.html', context)
 
 
 class UploadedProductsView(LoginRequiredMixin, View):
+    login_url='/index/'
+
     def get(self, request):
         products = Products.objects.filter(user=request.user)
         context = {
@@ -132,6 +163,8 @@ class UploadedProductsView(LoginRequiredMixin, View):
         return redirect(reverse('uploaded-products'))
 
 class DeleteProductView(LoginRequiredMixin, View):
+    login_url='/index/'
+
     def get(self, request, **kwargs):
         products = Products.objects.filter(id = kwargs['id'])
 
@@ -148,6 +181,8 @@ class DeleteProductView(LoginRequiredMixin, View):
 
 
 class EditProductView(LoginRequiredMixin, View):
+    login_url='/index/'
+
     def get(self, request, **kwargs):
         products = Products.objects.filter(id = kwargs['id'])
 
@@ -191,7 +226,6 @@ class EditProductView(LoginRequiredMixin, View):
             if product.user == request.user:
                 form = UpdateProductForm(request.POST, request.FILES)
                 if form.is_valid():
-                    print(request.POST)
                     if form.save(kwargs['id']):
                         messages.error(request, 'Product updated successfully.')
                     else:
@@ -214,8 +248,13 @@ class ShowProductView(View):
     def get(self, request):
         products = Products.objects.all()
         
+        login_form = LoginForm()
+        signup_form = SignUpForm()
+
         context = {
             'products' : products,
+            'login_form':login_form,
+            'signup_form':signup_form
         } 
 
         return render(request, 'shop.html', context)
@@ -225,14 +264,18 @@ class ShowProductView(View):
         
         searched_list = search(search_text)
 
-        context = {}
+        login_form = LoginForm()
+        signup_form = SignUpForm()
+
+        context = {
+            'login_form':login_form,
+            'signup_form':signup_form
+        }
 
         if len(searched_list) == 0:
             messages.error(request, 'No product found.')
         else:
-            context = {
-                'products' : searched_list
-            }
+            context['products'] = searched_list
         
         return render(request, 'shop.html', context)
 
@@ -243,8 +286,13 @@ class ProductView(View):
         
         if len(product) > 0:
 
+            login_form = LoginForm()
+            signup_form = SignUpForm()
+
             context ={
                 'product' : product[0],
+                'login_form':login_form,
+                'signup_form':signup_form
             }
 
             comments = ProductComments.objects.filter(product=product[0])
@@ -261,6 +309,8 @@ class ProductView(View):
 
 
 class AddCommentView(LoginRequiredMixin, View):
+    login_url='/index/'
+
     def get(self, request, **kwargs):
 
         id = kwargs['id']
@@ -276,6 +326,8 @@ class AddCommentView(LoginRequiredMixin, View):
 
 
 class AddProductToCartView(LoginRequiredMixin, View):
+    login_url = '/index/'
+
     def get(self, request, **kwargs):
 
         product_id = kwargs['id']
@@ -305,6 +357,8 @@ class AddProductToCartView(LoginRequiredMixin, View):
 
 
 class ShowCartView(LoginRequiredMixin, View):
+    login_url = '/index/'
+
     def get(self, request):
         cart = Cart.objects.filter(
             user_carted = CustomerUser.objects.get(
@@ -321,6 +375,8 @@ class ShowCartView(LoginRequiredMixin, View):
 
 
 class DeleteCartItemView(LoginRequiredMixin, View):
+    login_url = '/index/'
+    
     def get(self, request, **kwargs):
         cart_item_id = kwargs['id']
         cart_item = Cart.objects.filter(id=cart_item_id)
@@ -337,3 +393,124 @@ class DeleteCartItemView(LoginRequiredMixin, View):
             messages.error(request, "Wrong request.")
 
         return redirect(reverse('show-cart'))
+
+
+class ChatRoomView(LoginRequiredMixin, View):
+    login_url = '/index/'
+
+    def get(self, request):
+        rooms = ChatRoom.objects.filter(
+            Q(user1 = CustomerUser.objects.get(user = request.user)) |
+            Q(user2 = CustomerUser.objects.get(user = request.user))
+        )
+
+        context = {
+            'rooms' : rooms
+        }
+
+        return render(request, 'chat.html', context)
+
+    def post(self, request):
+        user2 = request.POST['id']
+        rooms = ChatRoom.objects.filter(
+            Q(user1 = CustomerUser.objects.get(user = request.user),
+            user2 = CustomerUser.objects.get(user = user2)) |
+            Q(user1 = CustomerUser.objects.get(user = user2),
+            user2 = CustomerUser.objects.get(user = request.user))
+        )
+
+        room = None
+        if len(rooms) > 0:
+            room = rooms[0]
+        else:
+            room = ChatRoom.objects.create(
+                user1 = CustomerUser.objects.get(user = request.user),
+                user2 = CustomerUser.objects.get(user = user2)
+            )
+    
+        context = {
+            'room_id':room.id,
+        }
+
+        return redirect(reverse('chat-room'))
+
+
+class ChatView(LoginRequiredMixin, View):
+    login_url = '/index/'
+
+    def get(self, request):
+        room_id = request.GET['id']
+
+        rooms = ChatRoom.objects.filter(id = room_id)
+
+        if len(rooms) > 0:
+            room = rooms[0]
+            chatsQuerySet = room.chat.all()
+            chats = []
+            for chat in chatsQuerySet:
+                tempChat ={
+                    'date':chat.date_of_chat,
+                    'send_by':chat.send_by.user.id,
+                    'chat':chat.chat
+                }
+                chats.append(tempChat)
+            resData = {
+                'chats' : chats
+            }
+
+            return JsonResponse(resData)
+        else:
+            messages.error('No room found.')
+            return redirect(reverse('/chat/'))
+    
+    def post(self, request):
+        room_id = request.POST['id']
+
+        rooms = ChatRoom.objects.filter(id = room_id)
+
+        if len(rooms) > 0:
+            room = rooms[0]
+            chat = Chat.objects.create(
+                send_by = CustomerUser.objects.get(user = request.user),
+                chat = request.POST['chat']
+            )
+            room.chat.add(chat)
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=400)
+
+
+class BuyProductView(LoginRequiredMixin, View):
+    login_url='/index/'
+
+    def get(self, request, **kwargs):
+        product_id = kwargs['id']
+
+        buyer = CustomerUser.objects.get(user = request.user)
+        products = Products.objects.filter(id=product_id,selled=False)
+
+        if len(products) > 0:
+            product = products[0]
+            PurchasedProducts.objects.create(
+                buyer = buyer,
+                product = product
+            )
+            product.selled = True
+            product.save()
+            messages.info(request, "Product purchased successfully.")
+        else:
+            messages.error(request, "Wrong product request.")
+        return redirect(reverse('shop'))
+
+
+class AboutUsView(View):
+    def get(self, request):
+        login_form = LoginForm()
+        signup_form = SignUpForm()
+        
+        context = {
+            'login_form':login_form,
+            'signup_form':signup_form
+        }
+
+        return render(request, 'about-us.html', context)

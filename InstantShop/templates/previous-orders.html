@@ -21,36 +21,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>23422</td>
-                <td>Title</td>
-                <td>234</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>23422</td>
-                <td>Title</td>
-                <td>23424</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>23422</td>
-                <td>Title</td>
-                <td>474334</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>23422</td>
-                <td>Title</td>
-                <td>23424</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>23422</td>
-                <td>Title</td>
-                <td>34334</td>
-            </tr>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.product.name }}</td>
+                    <td>&#8377;{{ order.product.price }}</td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}

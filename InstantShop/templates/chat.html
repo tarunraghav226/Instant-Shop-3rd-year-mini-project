@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <title>InstantShop-Chat</title>
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
+
+{% block main %}
+    <div class="chat-rooms">
+
+        {% csrf_token %}
+        <input type="text" id="curr_user" name="curr_user" value="{{ user.id }}" hidden>
+        {% for room in rooms %}
+            <div class="room">
+                <span>
+                    {% if room.user1.user == request.user %}
+                        {{ room.user2}}
+                    {% else %}
+                        {{ room.user1 }}
+                    {% endif %}
+                    <label for="open{{ forloop.counter }}">
+                        <i id="change{{ forloop.counter }}" class="fa fa-plus" onclick="change(this)"></i>
+                    </label>
+                </span>
+                <hr style="border:1px solid blanchedalmond">
+                <input type="checkbox" name="open{{ forloop.counter }}" id="open{{ forloop.counter }}" hidden>
+                <div class="chat-section">
+                    <div class="chats">
+                    </div>
+                    <div class="message-bar">
+                        <input type="text" id="room_id{{ forloop.counter }}" name="room_id{{ forloop.counter }}" value="{{ room.id }}" hidden>
+                        <div class="input-group mb-3 message">
+                            <input type="text" id="msg{{ forloop.counter }}" class="form-control" name="msg{{ forloop.counter }}" onkeyup="enterCheck(event,this);" placeholder="Message Here" aria-label="Chat message" >
+                            <div class="input-group-append">
+                                <button onclick="sendChatToServer(this);" class="input-group-text" id="basic-addon2">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <script>
+            var interval;
+            function change(ele){
+                var i = document.getElementById(ele.id);
+                var chatSection = ele.parentNode.parentNode.parentNode.childNodes[7]
+                console.log(chatSection);
+                if (i.classList.contains("fa-minus")){
+                    i.classList.remove("fa-minus");
+                    i.classList.add("fa-plus");
+                    clearInterval(interval);
+                    chatSection.style.display = 'none';
+                }
+                else{
+                    i.classList.remove("fa-plus");
+                    i.classList.add("fa-minus");
+                    interval = setInterval(getChatFromServer,1000,ele);
+                    chatSection.style.display = 'block';
+                    chatSection.style.height = '40vh';
+                    chatSection.style.width = '50vw';
+                    chatSection.style.backgroundColor = 'white';
+                    chatSection.style.alignSelf = 'center';
+                }
+            }
+
+            function sendChatToServer(ele){
+
+                var room_id = ele.parentNode.parentNode.parentNode.childNodes[1];
+                var msg = ele.parentNode.parentNode.childNodes[1];
+                console.log(msg)
+                var csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                    if(this.readyState == 4 && this.status == 200 ){
+                        msg.value = "";
+                    }
+                }
+                xhttp.open("POST","/chat/",true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                var data = "id="+room_id.value+"&chat="+msg.value+"&csrfmiddlewaretoken="+csrfToken;
+                console.log(data)
+                xhttp.send(data);
+                return false;
+            }
+
+            function getChatFromServer(ele){
+                var curr_user = document.getElementById("curr_user").value;
+                var room_id = ele.parentNode.parentNode.parentNode.childNodes[7].childNodes[3].childNodes[1];
+                
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                    if(this.readyState == 4 && this.status == 200 ){
+                        var chats = ele.parentNode.parentNode.parentNode.childNodes[7].childNodes[1];
+                        chats.innerHTML="";
+                        var res= JSON.parse(this.responseText);
+                        var chatArr = res['chats']
+                        for(chat of chatArr){
+                            var span = document.createElement("span");
+                            if(curr_user == chat['send_by']){
+                                span.classList.add("right");
+                            }
+                            else{
+                                span.classList.add("left");
+                            }
+                            span.innerText = chat['chat'];
+                            chats.appendChild(span)
+                            chats.appendChild(document.createElement("br"));
+                        }
+                    }
+                }
+                var URL = '/chat/?id='+room_id.value;
+                xhttp.open("GET",URL,true);
+                xhttp.send();
+                return false;
+            }
+            
+            function enterCheck(event,ele){
+                if(event.keyCode === 13){
+                    console.log("hmmm")
+                    var btn = ele.nextSibling.nextSibling.childNodes[1];
+                    btn.click();
+                }
+                console.log("no hmmm")
+            }
+        </script>
+    </div>
+{% endblock %}

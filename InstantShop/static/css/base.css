@@ -79,8 +79,11 @@ span{
     height: 100%;
 }
 
+.messages{
+    background: rgb(43, 22, 22);
+}
 
-@media only screen and (max-width:560px){
+@media only screen and (max-width:635px){
     nav ul li{
         clear: both;
         text-align: center;

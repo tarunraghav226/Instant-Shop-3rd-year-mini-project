@@ -27,7 +27,7 @@ urlpatterns = [
     path('', view.LoginView.as_view(), name='index'),
     path('register/', view.RegisterView.as_view(), name='register'),
     path('logout/', view.LogoutView.as_view(), name='logout'),
-    path('about-us/', TemplateView.as_view(template_name='about-us.html'), name='about_us'),
+    path('about-us/', view.AboutUsView.as_view(), name='about_us'),
     path('verify-email/<str:token>', view.EmailVerificationView.as_view(), name='verify_email'),
     path('shop/', view.ShowProductView.as_view(), name='shop'),
     path('profile/', view.ProfileView.as_view(), name='profile'),
@@ -41,4 +41,7 @@ urlpatterns = [
     path('add-to-cart/<int:id>', view.AddProductToCartView.as_view(), name='add-to-cart'),
     path('show-cart/', view.ShowCartView.as_view(), name='show-cart'),
     path('delete-cart-item/<int:id>', view.DeleteCartItemView.as_view(), name='delete-cart-item'),
+    path('chat-room/', view.ChatRoomView.as_view(), name='chat-room'),
+    path('chat/', view.ChatView.as_view(), name='chat'),
+    path('buy/<int:id>', view.BuyProductView.as_view(), name='buy-product')
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
