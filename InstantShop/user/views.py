@@ -86,7 +86,7 @@ class EmailVerificationView(View):
 
     def get(self, request, **kwargs):
         token = kwargs['token']
-        user = CustomerUser.objects.filter(token = token).first()
+        user = CustomerUser.objects.filter(token = token)[0]
         if user is not None:
             messages.success(request,'Email verified successfully.')
             user.is_email_verified = True
