@@ -321,7 +321,7 @@ class ProfilePhotoForm(forms.Form):
         if photo and photo.size <= 700000:
             return self.cleaned_data['photo']
         else:
-            ValidationError("Something went wrong.")
+            raise ValidationError("Something went wrong.")
 
     def save(self, user):
         c_users = CustomerUser.objects.filter(user = user)
