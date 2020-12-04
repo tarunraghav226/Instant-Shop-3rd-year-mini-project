@@ -59,7 +59,9 @@
                             <p id="description">{{ product.description }}</p>
                             <div class="links">
                                 <a href="{% url 'product-view' product.id %}" id="view">View</a>
-                                <a href="{% url 'add-to-cart' product.id %}" id="add-to-cart">Add to cart</a>
+                                {% if user.is_authenticated %}
+                                    <a href="{% url 'add-to-cart' product.id %}" id="add-to-cart">Add to cart</a>
+                                {% endif %}    
                             </div>
                         </div>
                     </div>
