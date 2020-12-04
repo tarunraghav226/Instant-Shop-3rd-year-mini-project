@@ -311,7 +311,7 @@ class ShowProductView(View):
 
 
     def get(self, request):
-        products = Products.objects.all()
+        products = Products.objects.filter(selled=False)
         
         login_form = LoginForm()
         signup_form = SignUpForm()
