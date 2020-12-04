@@ -311,7 +311,7 @@ class ShowProductView(View):
 
 
     def get(self, request):
-        products = Products.objects.all()
+        products = Products.objects.filter(selled=False)
         
         login_form = LoginForm()
         signup_form = SignUpForm()
@@ -427,12 +427,21 @@ class AddProductToCartView(LoginRequiredMixin, View):
             messages.error(request, 'Not a valid user.')
             return redirect(reverse('shop')) 
 
-        Cart.objects.create(
+        checkPreviousCartItems = Cart.objects.filter(
             user_carted = cust_user,
             product_carted = product
         )
 
-        messages.error(request, 'Product added to cart.')
+        if len(checkPreviousCartItems) == 0:
+            Cart.objects.create(
+                user_carted = cust_user,
+                product_carted = product
+            )
+
+            messages.error(request, 'Product added to cart.')
+        else:
+            messages.error(request, 'Product is already in cart.')
+
         return redirect(reverse('shop'))
 
 
